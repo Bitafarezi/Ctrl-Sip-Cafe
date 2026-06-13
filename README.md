@@ -95,18 +95,19 @@ The system supports:
 
 ---
 
-## 🗂️ Project Structure (Example)
+## 🗂️ Project Structure
 
 ctrl_sip_cafe/
-│
-├── accounts/ # user system
-├── products/ # menu & categories
-├── orders/ # ordering system
-├── reviews/ # comments & ratings
-├── core/ # shared logic
-├── templates/
-├── static/
-└── media/
+├── accounts/        
+├── products/        
+├── orders/         
+├── reviews/         
+├── core/           
+├── templates/       
+├── static/          
+└── media/  
+
+---
 
 ## 👥 Contributors
 
