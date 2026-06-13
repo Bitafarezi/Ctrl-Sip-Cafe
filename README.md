@@ -1,7 +1,7 @@
 # ☕ Ctrl+Sip Cafe
 
 <p align="center">
-  <img src="assets/logo.png" alt="Ctrl+Sip Cafe Logo" width="420"/>
+  <img src="assets/CtrlSipCafe.png" alt="Ctrl+Sip Cafe Logo" width="420"/>
 </p>
 
 Welcome to **Ctrl+Sip Cafe** — where code meets coffee and every sip compiles happiness ☕💻✨
