@@ -1,0 +1,63 @@
+========================================================================
+                      CAFE PROJECT - PHASE 1 TASK SUMMARY
+========================================================================
+[ ] NOT STARTED  |  [/] IN PROGRESS  |  [X] COMPLETED
+========================================================================
+
+------------------------------------------------------------------------
+0. INITIAL SETUP & REPO CONFIGURATION (Group Tasks)
+------------------------------------------------------------------------
+[ ] Create GitHub Repository (Private) & Add Mentors as Collaborators
+[ ] Create and switch to 'development' branch
+[ ] Database Analysis & Draw ERD using draw.io
+[ ] Setup clean, modular project architecture and base configuration
+
+------------------------------------------------------------------------
+1. AUTHENTICATION & USERS (Auth & Users)
+------------------------------------------------------------------------
+👤 ASSIGNED TO: [Name]
+
+[ ] Create a new Django application named 'users' or 'accounts'
+[ ] Define Custom User Model inheriting from AbstractUser
+[ ] Add 'phone_number' field to the Custom User Model
+[ ] Change Authentication Field from username to phone_number/email
+[ ] Write Class-Based RegisterView using CreateView
+[ ] Write Class-Based LoginView and LogoutView
+[ ] (Optional) Create signals.py for post_save Welcome Email/SMS
+
+------------------------------------------------------------------------
+2. CATEGORY & PRODUCTS MANAGEMENT (Products & Media)
+------------------------------------------------------------------------
+👤 ASSIGNED TO: [Name]
+
+[ ] Create a new Django application named 'products'
+[ ] Design Category model (fields: name, slug, is_active status)
+[ ] Design Product model (fields: name, description, price, stock, FK to Category)
+[ ] Design ProductDetail model for detailed info table (ingredients, etc.)
+[ ] Design ProductImage model (ImageField and FK to Product) for multiple images
+[ ] Create signals.py inside products app
+[ ] Write post_delete signal to automatically wipe files from Static/Media storage upon DB deletion
+
+------------------------------------------------------------------------
+3. MENU, FILTERS & WISHLIST (Front/Back Integration)
+------------------------------------------------------------------------
+👤 ASSIGNED TO: [Name]
+
+[ ] Design base Menu Template for dynamic Category display
+[ ] Write Class-Based MenuView (ListView) to filter products by Category
+[ ] Implement GET request query filters in view for time and category filtering
+[ ] Design Wishlist model (FK to User and FK to Product)
+[ ] Write Class-Based AddToWishlistView
+[ ] Write Class-Based RemoveFromWishlistView
+[ ] Write Class-Based WishlistListView for user panel display
+
+------------------------------------------------------------------------
+4. CORE STRUCTURE & SECURITY (Core & Admin)
+------------------------------------------------------------------------
+👤 ASSIGNED TO: [Name]
+
+[ ] Design abstract base TimestampModel (fields: created_at, updated_at)
+[ ] Inherit TimestampModel across all project models (User, Product, etc.)
+[ ] Register Category and Product models in admin.py
+[ ] Install and configure 'django-admin-honeypot' package in settings and urls.py
+[ ] Change default Django admin path to a hidden, secure URL
