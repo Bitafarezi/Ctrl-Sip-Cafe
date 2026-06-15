@@ -115,8 +115,6 @@ A big thank you to everyone who contributed to Ctrl+Sip Cafe ☕💻
 
 - Amirhossein Kheirash  
 - Bita Farezi
-- Mahdi Mirjamali 
-- Mohammadhassan Anisi  
-- Sajad Bahadorani  
+- Mohammadhassan Anisi   
 
 ---
