@@ -27,4 +27,4 @@ class UserProfileForm(forms.ModelForm):
 
         model = UserProfile
 
-        fields = ('first_name', 'last_name', 'display_name', 'image'
+        fields = ('first_name', 'last_name', 'display_name', 'image')
