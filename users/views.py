@@ -25,3 +25,10 @@ class UserLoginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy("menu") 
+    
+    
+class UserLogoutView(View):
+
+    def get(self, request):
+        logout(request)
+        return redirect("login") 
