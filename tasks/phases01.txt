@@ -7,20 +7,21 @@
 ------------------------------------------------------------------------
 0. INITIAL SETUP & REPO CONFIGURATION (Group Tasks)
 ------------------------------------------------------------------------
-[ ] Create GitHub Repository (Private) & Add Mentors as Collaborators
-[ ] Create and switch to 'development' branch
-[ ] Database Analysis & Draw ERD using draw.io
-[ ] Setup clean, modular project architecture and base configuration
+[X] Create GitHub Repository (Private) & Add Mentors as Collaborators
+[X] Create and switch to 'feature' branch
+[X] Database Analysis & Draw ERD using draw.io
+[X] Setup clean, modular project architecture and base configuration
 
 ------------------------------------------------------------------------
 1. AUTHENTICATION & USERS (Auth & Users)
 ------------------------------------------------------------------------
 👤 ASSIGNED TO: [Name]
 
-[ ] Create a new Django application named 'users' or 'accounts'
-[ ] Define Custom User Model inheriting from AbstractUser
-[ ] Add 'phone_number' field to the Custom User Model
-[ ] Change Authentication Field from username to phone_number/email
+[X] Create a new Django application named 'users' or 'accounts'
+[X] Define Custom User Model inheriting from AbstractUser
+[X] Add 'phone_number' field to the Custom User Model
+[X] Change Authentication Field from username to phone_number/email
+[X] Create separate UserProfile model for customer data (First Name, Last Name, Avatar, Display Name)
 [ ] Write Class-Based RegisterView using CreateView
 [ ] Write Class-Based LoginView and LogoutView
 [ ] (Optional) Create signals.py for post_save Welcome Email/SMS
@@ -30,8 +31,9 @@
 ------------------------------------------------------------------------
 👤 ASSIGNED TO: [Name]
 
-[ ] Create a new Django application named 'products'
+[X] Create a new Django application named 'products'
 [ ] Design Category model (fields: name, slug, is_active status)
+[/] Design Product model (Initial temporary model created for DB sync)
 [ ] Design Product model (fields: name, description, price, stock, FK to Category)
 [ ] Design ProductDetail model for detailed info table (ingredients, etc.)
 [ ] Design ProductImage model (ImageField and FK to Product) for multiple images
@@ -46,7 +48,7 @@
 [ ] Design base Menu Template for dynamic Category display
 [ ] Write Class-Based MenuView (ListView) to filter products by Category
 [ ] Implement GET request query filters in view for time and category filtering
-[ ] Design Wishlist model (FK to User and FK to Product)
+[X] Design Wishlist model (FK to User and FK to Product)
 [ ] Write Class-Based AddToWishlistView
 [ ] Write Class-Based RemoveFromWishlistView
 [ ] Write Class-Based WishlistListView for user panel display
@@ -56,8 +58,8 @@
 ------------------------------------------------------------------------
 👤 ASSIGNED TO: [Name]
 
-[ ] Design abstract base TimestampModel (fields: created_at, updated_at)
-[ ] Inherit TimestampModel across all project models (User, Product, etc.)
+[X] Design abstract base TimestampModel (fields: created_at, updated_at as 'BaseModel')
+[ ] Inherit TimestampModel across all project models (CustomUser & UserProfile)
 [ ] Register Category and Product models in admin.py
 [ ] Install and configure 'django-admin-honeypot' package in settings and urls.py
 [ ] Change default Django admin path to a hidden, secure URL
