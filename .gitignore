@@ -1,0 +1,13 @@
+
+.venv/
+venv/
+env/
+
+*.pyc
+__pycache__/
+db.sqlite3
+*.sqlite3
+
+Thumbs.db
+desktop.ini
+
