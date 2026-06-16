@@ -1,0 +1,35 @@
+{% extends 'users/base.html' %}
+
+{% block title %}Register - Ctrl+Sip Café{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Create Account ☕</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+            <div class="non-field-errors">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    {{ field.errors }}
+                {% endif %}
+            </div>
+        {% endfor %}
+        
+        <button type="submit" class="btn btn-success">Register</button>
+    </form>
+    
+    <div class="form-footer">
+        Already have an account? <a href="{% url 'login' %}" style="color: #4CAF50;">Login here</a>
+    </div>
+</div>
+{% endblock %}
