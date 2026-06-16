@@ -7,7 +7,7 @@ from .models import CustomUser, UserProfile
 class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ('phone_number')
+        fields = ('phone_number',)
 
     def clean_phone_number(self):
 
