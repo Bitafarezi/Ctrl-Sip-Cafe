@@ -3,29 +3,38 @@
 {% block title %}Register - Ctrl+Sip Café{% endblock %}
 
 {% block content %}
-<div class="form-container">
-    <h2>Create Account ☕</h2>
+<div class="form-container" style="width: 450px;"> <h2>Create Account ☕</h2>
     
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         
-        {% if form.non_field_errors %}
-            <div class="non-field-errors">
-                {{ form.non_field_errors }}
-            </div>
+        <h3 style="color: #4CAF50; border-bottom: 1px solid #333; padding-bottom: 5px;">Account Info</h3>
+        {% if user_form.non_field_errors %}
+            <div class="non-field-errors">{{ user_form.non_field_errors }}</div>
         {% endif %}
         
-        {% for field in form %}
+        {% for field in user_form %}
             <div class="form-group">
                 <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                 {{ field }}
-                {% if field.errors %}
-                    {{ field.errors }}
-                {% endif %}
+                {% if field.errors %}{{ field.errors }}{% endif %}
             </div>
         {% endfor %}
         
-        <button type="submit" class="btn btn-success">Register</button>
+        <h3 style="color: #4CAF50; border-bottom: 1px solid #333; padding-bottom: 5px; margin-top: 25px;">Profile Info</h3>
+        {% if profile_form.non_field_errors %}
+            <div class="non-field-errors">{{ profile_form.non_field_errors }}</div>
+        {% endif %}
+        
+        {% for field in profile_form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}{{ field.errors }}{% endif %}
+            </div>
+        {% endfor %}
+        
+        <button type="submit" class="btn btn-success" style="margin-top: 25px;">Register & Create Profile</button>
     </form>
     
     <div class="form-footer">
