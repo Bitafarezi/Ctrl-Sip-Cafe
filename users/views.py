@@ -1,34 +1,43 @@
-from django.contrib.auth import login, logout
+from django.shortcuts import render, redirect
+from django.views import View
 from django.contrib.auth.views import LoginView
-from django.shortcuts import redirect
-from django.urls import reverse_lazy
-from django.views.generic import CreateView, View
+from django.contrib.auth import logout
+from .forms import CustomUserCreationForm, UserProfileCreationForm
 
-from .forms import CustomUserCreationForm
+# 1. Registration View
+class RegisterView(View):
+    template_name = 'users/register.html'
 
+    def get(self, request):
+        user_form = CustomUserCreationForm()
+        profile_form = UserProfileCreationForm()
+        return render(request, self.template_name, {
+            'user_form': user_form,
+            'profile_form': profile_form
+        })
 
-class RegisterView(CreateView):
-    form_class = CustomUserCreationForm  
-    template_name = "users/register.html" 
-    success_url = reverse_lazy(
-        "login"
-    ) 
+    def post(self, request):
+        user_form = CustomUserCreationForm(request.POST)
+        profile_form = UserProfileCreationForm(request.POST, request.FILES)
 
-    def form_valid(self, form):
-        response = super().form_valid(form)
-        user = form.instance
-        return response
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            profile = profile_form.save(commit=False)
+            profile.user = user
+            profile.save()
+            return redirect('login')
+
+        return render(request, self.template_name, {
+            'user_form': user_form,
+            'profile_form': profile_form
+        })
 
 
 class UserLoginView(LoginView):
-    template_name = "users/login.html"
+    template_name = 'users/login.html'
 
-    def get_success_url(self):
-        return reverse_lazy("menu") 
-    
-    
+# 3. Logout View
 class UserLogoutView(View):
-
     def get(self, request):
         logout(request)
-        return redirect("login") 
+        return redirect('login')
