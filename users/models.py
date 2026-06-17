@@ -61,6 +61,7 @@ class UserProfile(BaseModel):
     first_name = models.CharField(max_length=50, blank=True, null=True, verbose_name="First Name")
     last_name = models.CharField(max_length=50, blank=True, null=True, verbose_name="Last Name")
     display_name = models.CharField(max_length=50, blank=True, null=True, verbose_name="Display Name / Username")
+    email = models.EmailField(unique=True)
     image = models.ImageField(upload_to="avatars/", blank=True, null=True, verbose_name="Profile Picture")
 
     def __str__(self):
