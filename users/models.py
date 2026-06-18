@@ -52,6 +52,8 @@ class CustomUser(AbstractUser, BaseModel):
     USERNAME_FIELD = 'phone_number'
     REQUIRED_FIELDS = []
     
+    objects = CustomUserManager()
+    
     def __str__(self):
         return self.phone_number
     
