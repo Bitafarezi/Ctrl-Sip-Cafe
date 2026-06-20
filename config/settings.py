@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
-    'products',
+    'shop',   
 ]
 
 MIDDLEWARE = [
@@ -124,4 +124,4 @@ STATICFILES_FINDERS = [
 ]
 
 
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'users.User'
