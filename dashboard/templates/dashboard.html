@@ -42,7 +42,7 @@
             <a class="text-decoration-none" href="{% url 'shop:home_page' %}">
                 <li class="rounded list-group-item bg-primary mt-2  text-white">Back To shop</li>
             </a>
-            <a class="text-decoration-none" href="{% url 'accounts:user_logout' %}">
+            <a class="text-decoration-none" href="{% url 'users:user_logout' %}">
                 <li class="rounded list-group-item bg-danger mt-2  text-white">Logout</li>
             </a>
             <div class="text-muted mt-2">You logged in as: {{ request.user.email }}</div>

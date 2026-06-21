@@ -98,7 +98,7 @@ The system supports:
 ## 🗂️ Project Structure
 
 ctrl_sip_cafe/
-├── accounts/        
+├── users/        
 ├── products/        
 ├── orders/         
 ├── reviews/         
