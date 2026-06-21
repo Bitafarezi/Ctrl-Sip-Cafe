@@ -35,7 +35,7 @@ def manager_login(request):
                 messages.error(
                     request, 'username or password is wrong', 'danger'
                 )
-                return redirect('accounts:manager_login')
+                return redirect('users:manager_login')
     else:
         form = ManagerLoginForm()
     context = {'form': form}
@@ -50,7 +50,7 @@ def user_register(request):
             user = User.objects.create_user(
                 data['email'], data['full_name'], data['password']
             )
-            return redirect('accounts:user_login')
+            return redirect('users:user_login')
     else:
         form = UserRegistrationForm()
     context = {'title':'Signup', 'form':form}
@@ -72,7 +72,7 @@ def user_login(request):
                 messages.error(
                     request, 'username or password is wrong', 'danger'
                 )
-                return redirect('accounts:user_login')
+                return redirect('users:user_login')
     else:
         form = UserLoginForm()
     context = {'title':'Login', 'form': form}
@@ -81,7 +81,7 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('accounts:user_login')
+    return redirect('users:user_login')
 
 
 def edit_profile(request):
@@ -89,7 +89,7 @@ def edit_profile(request):
     if form.is_valid():
         form.save()
         messages.success(request, 'Your profile has been updated', 'success')
-        return redirect('accounts:edit_profile')
+        return redirect('users:edit_profile')
     else:
         form = EditProfileForm(instance=request.user)
     context = {'title':'Edit Profile', 'form':form}
