@@ -61,15 +61,15 @@
             <li><a href="{% url 'cart:show_cart' %}" <a class="dropdown-item">Cart</a></li>
             <li><a href="{% url 'shop:favorites' %}" <a class="dropdown-item">Favorites</a></li>
             <li><a href="{% url 'orders:user_orders' %}" <a class="dropdown-item">Orders</a></li>
-            <li><a class="dropdown-item" href="{% url 'accounts:edit_profile' %}">Edit Profile</a></li>
-            <li><a class="dropdown-item text-danger" href="{% url 'accounts:user_logout' %}">Sign out</a></li>
+            <li><a class="dropdown-item" href="{% url 'users:edit_profile' %}">Edit Profile</a></li>
+            <li><a class="dropdown-item text-danger" href="{% url 'users:user_logout' %}">Sign out</a></li>
           </ul>
         </div>
         {% else %}
         <!-- login, sign-up btn -->
         <div class="text-end">
-          <a href="{% url 'accounts:user_login' %}" class="btn btn-outline-primary me-2">Login</a>
-          <a href="{% url 'accounts:user_register' %}" class="btn btn-primary">Sign-up</a>
+          <a href="{% url 'users:user_login' %}" class="btn btn-outline-primary me-2">Login</a>
+          <a href="{% url 'users:user_register' %}" class="btn btn-primary">Sign-up</a>
         </div>
         {% endif %}
       </div>
