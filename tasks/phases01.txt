@@ -17,7 +17,7 @@
 ------------------------------------------------------------------------
 👤 ASSIGNED TO: [Name]
 
-[X] Create a new Django application named 'users' or 'accounts'
+[X] Create a new Django application named 'users' or 'users'
 [X] Define Custom User Model inheriting from AbstractUser
 [X] Add 'phone_number' field to the Custom User Model
 [X] Change Authentication Field from username to phone_number/email
