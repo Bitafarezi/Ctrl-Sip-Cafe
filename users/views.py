@@ -6,20 +6,6 @@ from .forms import UserRegistrationForm, UserLoginForm, ManagerLoginForm, EditPr
 from users.models import User
 
 
-def create_manager():
-    """
-    to execute once on startup:
-    this function will call in online_shop/urls.py
-    """
-    if not User.objects.filter(email="manager@example.com").first():
-        user = User.objects.create_user(
-            "manager@example.com", 'shop manager' ,'managerpass1234'
-        )
-        # give this user manager role
-        user.is_manager = True
-        user.save()
-
-
 def manager_login(request):
     if request.method == 'POST':
         form = ManagerLoginForm(request.POST)
