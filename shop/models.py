@@ -44,3 +44,11 @@ class Product(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='shop/')
+
+    def __str__(self):
+        return f"Image for {self.product.title}"
