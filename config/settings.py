@@ -60,6 +60,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'config.context_processors.return_cart',
                 'config.context_processors.return_categories',
+                'config.context_processors.return_notifications',
             ],
         },
     },
