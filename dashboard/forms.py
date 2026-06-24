@@ -1,7 +1,8 @@
 from django import forms
 from django.forms import ModelForm
+from django.forms import modelformset_factory
 
-from shop.models import Product, Category
+from shop.models import Product, Category, ProductImage
 
 
 class AddProductForm(ModelForm):
@@ -28,6 +29,24 @@ class AddCategoryForm(ModelForm):
         self.fields['title'].widget.attrs['class'] = 'form-control'
 
 
+class ProductImageForm(ModelForm):
+    class Meta:
+        model = ProductImage
+        fields = ['image', 'order']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+            
+ProductImageFormSet = modelformset_factory(
+    ProductImage, 
+    form=ProductImageForm,
+    extra=3,  
+    can_delete=True  
+)
+
+           
 class EditProductForm(ModelForm):
     class Meta:
         model = Product
