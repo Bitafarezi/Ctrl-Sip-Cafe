@@ -29,11 +29,35 @@
         <a href="{% url 'shop:add_to_favorites' product.id %}" class="btn btn-outline-success mt-5 text-capitalize ">add to {{favorites}}</a>
         {% endif %}
     </div>
-    <!-- product image -->
+
+    <!-- product images -->
     <div class="col-md-6">
-        <img style="object-fit: cover;" class="rounded" src="{{ product.image.url }}" width="510" height="500">
+        <!-- main image-->
+        <img id="mainImage" style="object-fit: cover;" class="rounded w-100" 
+            src="{{ product.image.url }}" height="500">
+
+        <!-- tumbnails -->
+        <div class="d-flex gap-2 mt-2 flex-wrap">
+            <!-- main image product image -->
+            <img src="{{ product.image.url }}"
+                onclick="document.getElementById('mainImage').src=this.src"
+                style="object-fit: cover; cursor: pointer; border: 2px solid #0d6efd;"
+                class="rounded" width="80" height="80">
+
+            <!-- extra images from ProductImage -->
+            {% for img in product.images.all %}
+                <img src="{{ img.image.url }}"
+                    onclick="document.getElementById('mainImage').src=this.src"
+                    style="object-fit: cover; cursor: pointer; border: 2px solid transparent;"
+                    class="rounded" width="80" height="80"
+                    onmouseover="this.style.borderColor='#0d6efd'"
+                    onmouseout="this.style.borderColor='transparent'">
+            {% endfor %}
+        </div>
     </div>
+
 </div>
+
 <!-- related products -->
 <div class="row mt-4 mb-4">
     <h3>Related Products:</h3><hr>
