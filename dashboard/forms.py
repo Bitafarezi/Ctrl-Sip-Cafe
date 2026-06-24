@@ -1,6 +1,5 @@
 from django import forms
-from django.forms import ModelForm
-from django.forms import modelformset_factory
+from django.forms import ModelForm, inlineformset_factory
 
 from shop.models import Product, Category, ProductImage
 
@@ -39,7 +38,8 @@ class ProductImageForm(ModelForm):
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
             
-ProductImageFormSet = modelformset_factory(
+ProductImageFormSet = inlineformset_factory(
+    Product,
     ProductImage, 
     form=ProductImageForm,
     extra=3,  
