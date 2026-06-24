@@ -4,10 +4,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.http import Http404
 
-from shop.models import Product
+from shop.models import Product, ProductImage
 from users.models import User
 from orders.models import Order, OrderItem
-from .forms import AddProductForm, AddCategoryForm, EditProductForm
+from .forms import AddProductForm, AddCategoryForm, EditProductForm, ProductImageFormSet
 
 
 def is_manager(user):
@@ -32,13 +32,22 @@ def products(request):
 def add_product(request):
     if request.method == 'POST':
         form = AddProductForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Product added Successfuly!')
+        formset = ProductImageFormSet(request.POST, request.FILES, queryset=ProductImage.objects.none())
+        
+        if form.is_valid() and formset.is_valid():
+            product = form.save()
+            for image_form in formset:
+                if image_form.cleaned_data.get('image'):
+                    img = image_form.save(commit=False)
+                    img.product = product
+                    img.save()
+            messages.success(request, 'Product added Successfully!')
             return redirect('dashboard:add_product')
     else:
         form = AddProductForm()
-    context = {'title':'Add Product', 'form':form}
+        formset = ProductImageFormSet(queryset=ProductImage.objects.none())
+    
+    context = {'title': 'Add Product', 'form': form, 'formset': formset}
     return render(request, 'add_product.html', context)
 
 

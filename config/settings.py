@@ -20,19 +20,19 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'users.apps.UsersConfig',
+    'cart.apps.CartConfig',
+    'orders.apps.OrdersConfig',
+    'shop.apps.ShopConfig',
+    'dashboard.apps.DashboardConfig',
+    'crispy_forms',
+    'crispy_bootstrap4',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crispy_forms',
-    'crispy_bootstrap4',
-    'users.apps.UsersConfig',
-    'cart.apps.CartConfig',
-    'orders.apps.OrdersConfig',
-    'shop.apps.ShopConfig',
-    'dashboard.apps.DashboardConfig',
 ]
 
 MIDDLEWARE = [
@@ -104,7 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
