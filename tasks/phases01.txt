@@ -22,8 +22,8 @@
 [X] Add 'phone_number' field to the Custom User Model
 [X] Change Authentication Field from username to phone_number/email
 [X] Create separate UserProfile model for customer data (First Name, Last Name, Avatar, Display Name)
-[ ] Write Class-Based RegisterView using CreateView
-[ ] Write Class-Based LoginView and LogoutView
+[X] Write Class-Based RegisterView using CreateView
+[X] Write Class-Based LoginView and LogoutView
 [ ] (Optional) Create signals.py for post_save Welcome Email/SMS
 
 ------------------------------------------------------------------------
@@ -31,14 +31,13 @@
 ------------------------------------------------------------------------
 👤 ASSIGNED TO: [Name]
 
-[X] Create a new Django application named 'products'
-[ ] Design Category model (fields: name, slug, is_active status)
-[/] Design Product model (Initial temporary model created for DB sync)
-[ ] Design Product model (fields: name, description, price, stock, FK to Category)
-[ ] Design ProductDetail model for detailed info table (ingredients, etc.)
-[ ] Design ProductImage model (ImageField and FK to Product) for multiple images
-[ ] Create signals.py inside products app
-[ ] Write post_delete signal to automatically wipe files from Static/Media storage upon DB deletion
+[X] Create a new Django application named 'shop'
+[X] Design Category model (fields: name, slug, is_active status)
+[X] Design Product model (Initial temporary model created for DB sync)
+[X] Design Product model (fields: name, description, price, stock, FK to Category)
+[X] Design ProductImage model (ImageField and FK to Product) for multiple images
+[X] Create signals.py inside shop app
+[X] Write post_delete signal to automatically wipe files from Static/Media storage upon DB deletion
 
 ------------------------------------------------------------------------
 3. MENU, FILTERS & WISHLIST (Front/Back Integration)
@@ -49,9 +48,9 @@
 [ ] Write Class-Based MenuView (ListView) to filter products by Category
 [ ] Implement GET request query filters in view for time and category filtering
 [X] Design Wishlist model (FK to User and FK to Product)
-[ ] Write Class-Based AddToWishlistView
-[ ] Write Class-Based RemoveFromWishlistView
-[ ] Write Class-Based WishlistListView for user panel display
+[X] Write Class-Based AddToWishlistView
+[X] Write Class-Based RemoveFromWishlistView
+[X] Write Class-Based WishlistListView for user panel display
 
 ------------------------------------------------------------------------
 4. CORE STRUCTURE & SECURITY (Core & Admin)
@@ -60,6 +59,6 @@
 
 [X] Design abstract base TimestampModel (fields: created_at, updated_at as 'BaseModel')
 [ ] Inherit TimestampModel across all project models (CustomUser & UserProfile)
-[ ] Register Category and Product models in admin.py
+[X] Register Category, Product, and ProductImage models in admin.py
 [ ] Install and configure 'django-admin-honeypot' package in settings and urls.py
 [ ] Change default Django admin path to a hidden, secure URL
