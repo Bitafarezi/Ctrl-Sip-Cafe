@@ -22,10 +22,9 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'cart.apps.CartConfig',
-    'orders.apps.OrdersConfig',
     'shop.apps.ShopConfig',
     'dashboard.apps.DashboardConfig',
-    'shop_orders.appps.ShopOrdersConfig'
+    'orders.apps.OrdersConfig',
     'crispy_forms',
     'crispy_bootstrap4',
     'django.contrib.admin',
