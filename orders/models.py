@@ -1,35 +1,33 @@
 from django.db import models
-from users.models import User
+from django.conf import settings
 from shop.models import Product
 
 # Create your models here.
 
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    status = models.BooleanField(default=False)
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('processing', 'Processing'),
+        ('delivered', 'Delivered'),
+        ('cancelled', 'Cancelled'),
+    ]
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders')
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    total_price = models.IntegerField(default=0)
 
     class Meta:
-        ordering = ('-created',)
+        ordering = ['-created_at']
 
     def __str__(self):
-        return f"{self.user.full_name} - order id: {self.id}"
+        return f"Order #{self.id} - {self.user.username}"
 
-    @property
-    def get_total_price(self):
-        total = sum(item.get_cost() for item in self.items.all())
-        return total
-    
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='order_items')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
     price = models.IntegerField()
-    quantity = models.SmallIntegerField(default=1)
 
     def __str__(self):
-        return str(self.id)
-
-    def get_cost(self):
-        return self.price * self.quantity
+        return f"{self.quantity} x {self.product.title}"
