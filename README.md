@@ -26,7 +26,7 @@ The system supports:
 ## 🎯 Key Features
 
 ### 👤 User Features
-- Create an account (email/phone-based signup optional)
+- Create an account (email signup)
 - Login / logout system
 - Personal profile (username, name, profile picture)
 - Favorite products list ❤️
@@ -61,7 +61,7 @@ The system supports:
 - **Database:** SQLite / PostgreSQL
 - **Frontend:** HTML, CSS, Bootstrap
 - **Media Handling:** Django Media & Static system
-- **Admin Panel:** Django Admin
+- **Admin Panel:** Django Admin / Manager
 - **Optional Security:** Honeypot for admin protection
 
 ---
@@ -98,14 +98,15 @@ The system supports:
 ## 🗂️ Project Structure
 
 ctrl_sip_cafe/
+|
 ├── users/        
-├── products/        
-├── orders/         
-├── reviews/         
-├── core/           
-├── templates/       
-├── static/          
-└── media/  
+├── cart/        
+├── config/         
+├── dashboard/         
+├── media/           
+├── orders/               
+└── shop/
+
 
 ---
 
