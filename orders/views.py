@@ -15,7 +15,7 @@ def create_order(request):
     for item in cart:
         OrderItem.objects.create(
             order=order, product=item['product'],
-            price=item['price'], quantity=item['quantity']
+            price=int(float(item['price'])), quantity=item['quantity']
         )
     # Send notification to admin
     from shop.models import Notification
