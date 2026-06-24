@@ -63,15 +63,26 @@ def delete_product(request, id):
 @login_required
 def edit_product(request, id):
     product = get_object_or_404(Product, id=id)
+    
     if request.method == 'POST':
         form = EditProductForm(request.POST, request.FILES, instance=product)
-        if form.is_valid():
+        formset = ProductImageFormSet(request.POST, request.FILES, instance=product)
+        
+        if form.is_valid() and formset.is_valid():
             form.save()
-            messages.success(request, 'Product has been updated', 'success')
+            formset.save() 
+            
+            messages.success(request, 'Product and images have been updated', 'success')
             return redirect('dashboard:products')
     else:
         form = EditProductForm(instance=product)
-    context = {'title': 'Edit Product', 'form':form}
+        formset = ProductImageFormSet(instance=product)
+        
+    context = {
+        'title': 'Edit Product', 
+        'form': form,
+        'formset': formset
+    }
     return render(request, 'edit_product.html', context)
 
 
