@@ -16,6 +16,11 @@ def create_order(request):
         OrderItem.objects.create(
             order=order, product=item['product'],
             price=item['price'], quantity=item['quantity']
+        )
+    # Send notification to admin
+    from shop.models import Notification
+    Notification.objects.create(
+        message=f"🛒 New Order from {request.user.full_name} - Price: ${order.get_total_price}"
     )
     return redirect('orders:pay_order', order_id=order.id)
 
