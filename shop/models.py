@@ -56,3 +56,15 @@ class ProductImage(models.Model):
     
     def __str__(self):
         return f"Image for {self.product.title}"
+    
+
+class Notification(models.Model):
+    message = models.TextField()
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.message
