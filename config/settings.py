@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'shop.apps.ShopConfig',
     'dashboard.apps.DashboardConfig',
+    'shop_orders.appps.ShopOrdersConfig'
     'crispy_forms',
     'crispy_bootstrap4',
     'django.contrib.admin',
