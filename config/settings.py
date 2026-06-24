@@ -22,9 +22,9 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'cart.apps.CartConfig',
-    'orders.apps.OrdersConfig',
     'shop.apps.ShopConfig',
     'dashboard.apps.DashboardConfig',
+    'orders.apps.OrdersConfig',
     'crispy_forms',
     'crispy_bootstrap4',
     'django.contrib.admin',
@@ -60,6 +60,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'config.context_processors.return_cart',
                 'config.context_processors.return_categories',
+                'config.context_processors.return_notifications',
             ],
         },
     },

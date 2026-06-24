@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.http import Http404
 
-from shop.models import Product, ProductImage
+from shop.models import Product, ProductImage, Notification
 from users.models import User
 from orders.models import Order, OrderItem
 from .forms import AddProductForm, AddCategoryForm, EditProductForm, ProductImageFormSet
@@ -105,3 +105,12 @@ def order_detail(request, id):
     items = OrderItem.objects.filter(order=order).all()
     context = {'title':'order detail', 'items':items, 'order':order}
     return render(request, 'order_detail.html', context)
+
+
+def mark_read(request):
+    Notification.objects.filter(is_read=False).update(is_read=True)
+    return redirect('dashboard:products')
+
+def dashboard(request):
+    context = {'title': 'Dashboard'}
+    return render(request, 'dashboard.html', context)
