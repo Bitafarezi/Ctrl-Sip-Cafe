@@ -5,11 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- google fonts -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <!-- bootstrap css cdn -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>{% if title %} {{ title }} {% else %} Django Online Shop {% endif %}</title>
+    <title>{% if title %} {{ title }} {% else %} Ctrl+Sip Cafe {% endif %}</title>
     <style>
         body {
             background-image: url("{% static 'images/your-bg.jpg' %}"); 
@@ -18,85 +16,119 @@
             background-attachment: fixed; 
             background-position: center;
         }
+
+        header {
+            z-index: 1030 !important; 
+            position: relative;
+        }
+
+        .boho-dropdown {
+            z-index: 1050 !important; 
+        }
+
+        .dropdown-item:hover {
+            background-color: #dda15e !important;
+            color: #fff !important;
+        }
+
+        /* حذف هاله و سایه آبی پیش‌فرض بوت‌استرپ هنگام کلیک روی دکمه پروفایل */
+        .btn-boho-main:focus, .btn-boho-main:active, .btn-boho-main.show {
+            box-shadow: 0 0 0 0.25rem rgba(221, 161, 94, 0.5) !important;
+            background-color: #bc6c25 !important;
+            border-color: #bc6c25 !important;
+        }
+
+        /* حذف هاله آبی سرچ و جایگزینی با رنگ خردلی ملایم بوهو */
+        .form-boho:focus {
+            border-color: #dda15e !important;
+            box-shadow: 0 0 0 0.25rem rgba(221, 161, 94, 0.3) !important;
+        }
     </style>
 </head>
 <body>
-  <header class="p-2 border-bottom">
+  <header class="p-2 border-bottom" style="background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(5px);">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <!-- cart icon -->
+        
         {% if request.user.is_authenticated %}
-        <b class="text-primary">{{ cart_count }}</b>
+        <b style="color: #e29578;">{{ cart_count }}</b>
         {% endif %}
-        <a href="{% url 'cart:show_cart' %}" class="text-primary mt-2 me-2"><i class="material-icons h3">&#xe8cc;</i></a>
-        <!-- favorite icon -->
+        <a href="{% url 'cart:show_cart' %}" style="color: #c26d5c;" class="mt-2 me-2"><i class="material-icons h3">&#xe8cc;</i></a>
+        
         {% if request.user.is_authenticated %}
-        <b class="text-primary">{{ request.user.get_likes_count}}</b>
+        <b style="color: #e29578;">{{ request.user.get_likes_count}}</b>
         {% endif %}
-        <a href="{% url 'shop:favorites' %}" class="text-primary mt-2 me-2"><i class="material-icons h3">&#xe87d;</i></a>
-        <!-- Menu -->
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <a href="{% url 'shop:favorites' %}" style="color: #c26d5c;" class="mt-2 me-2"><i class="material-icons h3">&#xe87d;</i></a>
+        
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 align-items-center">
           <li><a href="{% url 'shop:home_page' %}" class="nav-link px-2 text-dark">Home</a></li>
           <li><a href="#" class="nav-link px-2 text-dark">Shop</a></li>
-          <!-- categories dropdown -->
-          <div class="dropdown text-end">
-            <a href="#" class=" mt-2 me-1 ms-1 text-dark d-block link-dark text-decoration-none dropdown-toggle"id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
-            <ul class="dropdown-menu" aria-labelledby="dropdownUser1">
+          
+          <li class="dropdown">
+            <a href="#" class="nav-link px-2 text-dark dropdown-toggle" id="dropdownCategories" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+            <ul class="dropdown-menu boho-dropdown shadow" aria-labelledby="dropdownCategories" style="background-color: #f4eae1; border-color: #dda15e;">
               {% for category in categories %}
-              <!-- check if category is parent -->
                 {% if not category.is_sub %}
-                  <!-- parent -->
-                  <li><a href="{% url 'shop:filter_by_category' category.slug %}" class="dropdown-item text-capitalize bg-light border"><b>{{ category }}</b></a></li>
+                  <li><a href="{% url 'shop:filter_by_category' category.slug %}" class="dropdown-item text-capitalize border-bottom" style="color: #bc6c25; background-color: #ebdcd0;"><b>{{ category }}</b></a></li>
                   {% for child in category.sub_categories.all %}
-                   <!-- child -->
-                   <li><a href="{% url 'shop:filter_by_category' child.slug %}" class="dropdown-item">{{ child }}</a></li>
+                   <li><a href="{% url 'shop:filter_by_category' child.slug %}" class="dropdown-item" style="color: #606c38;">{{ child }}</a></li>
                   {% endfor %}
                 {% endif %}
               {% endfor %}
             </ul>
-          </div>
+          </li>
+          
           <li><a href="#" class="nav-link px-2 text-dark">FAQs</a></li>
           <li><a href="#" class="nav-link px-2 text-dark">About</a></li>
         </ul>
-        <!-- search form -->
+        
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" action="{% url 'shop:search' %}">
-          <input name="q" type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+          <input name="q" type="search" class="form-control form-control-dark form-boho" placeholder="Search..." aria-label="Search" style="border-color: #dda15e;">
         </form>
+        
         {% if request.user.is_authenticated %}
-        <!-- user profile dropdown -->
-        <div class="dropdown text-end">
-          <a href="#" class="btn btn-primary text-white me-4 d-block link-dark text-decoration-none dropdown-toggle"id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
-          <ul class="dropdown-menu" aria-labelledby="dropdownUser1">
-            <li><a href="{% url 'cart:show_cart' %}" <a class="dropdown-item">Cart</a></li>
-            <li><a href="{% url 'shop:favorites' %}" <a class="dropdown-item">Favorites</a></li>
-            <li><a href="{% url 'orders:user_orders' %}" <a class="dropdown-item">Orders</a></li>
-            <li><a class="dropdown-item" href="{% url 'users:edit_profile' %}">Edit Profile</a></li>
-            <li><a class="dropdown-item text-danger" href="{% url 'users:user_logout' %}">Sign out</a></li>
+        <div class="dropdown text-end" style="direction: ltr;">
+          <a href="#" class="btn me-4 d-block text-decoration-none dropdown-toggle text-white btn-boho-main"
+            style="background-color: #bc6c25; border-color: #bc6c25; color: white !important;"
+            id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+            Profile
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end boho-dropdown shadow" aria-labelledby="dropdownUser1" style="background-color: #f4eae1; border-color: #dda15e; text-align: left;">
+              <li><a class="dropdown-item" href="{% url 'cart:show_cart' %}" style="color: #606c38;">Cart</a></li>
+              <li><a class="dropdown-item" href="{% url 'shop:favorites' %}" style="color: #606c38;">Favorites</a></li>
+              <li><a class="dropdown-item" href="{% url 'orders:user_orders' %}" style="color: #606c38;">Orders</a></li>
+              <li><hr class="dropdown-divider" style="border-color: #dda15e;"></li>
+              <li><a class="dropdown-item" href="{% url 'users:edit_profile' %}" style="color: #606c38;">Edit Profile</a></li>
+              <li><a class="dropdown-item" href="{% url 'users:user_logout' %}" style="color: #b84a39;">Sign out</a></li>
           </ul>
         </div>
         {% else %}
-        <!-- login, sign-up btn -->
         <div class="text-end">
-          <a href="{% url 'users:user_login' %}" class="btn btn-outline-primary me-2">Login</a>
-          <a href="{% url 'users:user_register' %}" class="btn btn-primary">Sign-up</a>
+          <a href="{% url 'users:user_login' %}" class="btn me-2" 
+            style="border-color: #606c38; color: #606c38; background-color: transparent;">
+            Login
+          </a>
+          <a href="{% url 'users:user_register' %}" class="btn text-white" 
+            style="background-color: #dda15e; border-color: #dda15e;">
+            Sign-up
+          </a>
         </div>
         {% endif %}
       </div>
     </div>
   </header>
-    <main class="container">
-        <div class="row mt-3">
-          <!-- messages -->
-          {% if messages %}
-            {% for message in messages %}
-              <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-          {% endif %}
-          <!-- content -->
-          {% block content %}{% endblock %}
-        </div>
-      </main>
-    <!-- Bootstrap JavaScript Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  
+  <main class="container">
+    <div class="row mt-3">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
