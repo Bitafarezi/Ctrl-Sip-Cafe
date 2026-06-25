@@ -98,10 +98,11 @@ The system supports:
 ## 🗂️ Project Structure
 
 ctrl_sip_cafe/
-|
+
 ├── users/        
 ├── cart/        
-├── config/         
+├── config/
+├── static/         
 ├── dashboard/         
 ├── media/           
 ├── orders/               
