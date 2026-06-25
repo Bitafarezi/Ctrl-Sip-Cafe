@@ -1,44 +1,106 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="col-md-2"></div>
+<style>
+    .boho-cart-box {
+        border-color: #ebdcd0 !important;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+        border-radius: 12px !important;
+    }
+
+    .boho-table th, .boho-table td {
+        vertical-align: middle;
+        border-color: #f4eae1 !important;
+    }
+    .boho-table thead th {
+        color: #606c38 !important;
+        font-weight: bold;
+    }
+
+    .boho-product-link {
+        color: #bc6c25 !important;
+        font-weight: bold;
+        transition: color 0.2s;
+    }
+    .boho-product-link:hover {
+        color: #dda15e !important;
+    }
+
+    .btn-boho-checkout {
+        background-color: #606c38 !important;
+        border-color: #606c38 !important;
+        color: #fff !important;
+        transition: all 0.2s ease-in-out;
+    }
+    .btn-boho-checkout:hover, .btn-boho-checkout:focus {
+        background-color: #4f582f !important;
+        border-color: #4f582f !important;
+        box-shadow: 0 0 0 0.25rem rgba(96, 108, 56, 0.2) !important;
+    }
+
+    .text-boho-danger {
+        color: #b84a39 !important;
+        font-weight: 500;
+        transition: color 0.2s;
+    }
+    .text-boho-danger:hover {
+        color: #e65c45 !important;
+    }
+
+    .link-boho {
+        color: #bc6c25 !important;
+        font-weight: bold;
+    }
+    .link-boho:hover {
+        color: #dda15e !important;
+    }
+</style>
+
+<div class="row justify-content-center mt-5">
 {% if cart_count != 0 %}
-<div class="col-md-8 border rounded p-3">
-<table class="table table-striped ">
-    <thead class="text-muted">
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">product</th>
-        <th scope="col">price</th>
-        <th scope="col">quantity</th>
-        <th scope="col">total price</th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    {% for item in cart %}
-    <tbody>
-      <tr>
-        <th scope="row">{{ forloop.counter }}</th>
-        <td><a class="text-decoration-none" href="{{ item.product.get_absolute_url }}">{{ item.product.title }}</a></td>
-        <td>${{ item.price }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>${{ item.total_price }}</td>
-        <td><a class="text-danger text-decoration-none" href="{% url 'cart:remove_from_cart' item.product.id %}">remove</a></td>
-      </tr>
-    </tbody>
-    {% endfor %}
-</table>
-<hr>
-<a href="{% url 'orders:create_order' %}" style="float: right;" class="btn btn-success mt-1">Checkout</a>
-<h4 class="mt-4"><span class="text-muted">Total:</span> ${{ cart.get_total_price }}</h4>
+<div class="col-md-10 col-lg-8 border p-4 boho-cart-box">
+    <h3 class="fw-bold mb-4" style="color: #606c38;">Your Shopping Cart</h3>
+    
+    <div class="table-responsive">
+        <table class="table boho-table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total Price</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in cart %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td><a class="text-decoration-none boho-product-link" href="{{ item.product.get_absolute_url }}">{{ item.product.title }}</a></td>
+                <td>{{ item.price }} Toman</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.total_price }} Toman</td>
+                <td><a class="text-boho-danger text-decoration-none" href="{% url 'cart:remove_from_cart' item.product.id %}">Remove</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <hr style="border-color: #dda15e;">
+    
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-4">
+        <h4 class="mb-3 mb-sm-0"><span class="text-muted">Total:</span> <span class="fw-bold" style="color: #bc6c25;">{{ cart.get_total_price }} Toman</span></h4>
+        <a href="{% url 'orders:create_order' %}" class="btn btn-boho-checkout px-5 py-2 fw-bold">Checkout</a>
+    </div>
 </div>
 {% else %}
-<div class="col-md-8 mt-5 pt-5 text-center">
-  <br>
-  <h3 class="text-muted text-capitalize">cart is empty..!</h3>
-  <a href="/" class="text-primary text-decoration-none">Back</a>
+<div class="col-md-8 text-center py-5">
+  <h3 class="text-capitalize mb-3" style="color: #606c38;">Cart is empty..!</h3>
+  <a href="/" class="text-decoration-none link-boho">Back to Shop</a>
 </div>
 {% endif %}
-<div class="col-md-2"></div>
-
+</div>
 {% endblock %}
