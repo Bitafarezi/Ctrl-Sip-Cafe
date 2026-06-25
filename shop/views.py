@@ -36,8 +36,9 @@ def product_detail(request, slug):
 		'favorites':'favorites',
 		'related_products':related_products
 	}
-	if request.user.likes.filter(id=product.id).first():
-		context['favorites'] = 'remove'
+	if request.user.is_authenticated:
+		if request.user.likes.filter(id=product.id).exists():
+			context['favorites'] = 'remove'
 	return render(request, 'product_detail.html', context)
 
 
