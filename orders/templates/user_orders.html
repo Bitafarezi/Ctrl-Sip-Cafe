@@ -1,38 +1,89 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    .boho-order-box {
+        border-color: #ebdcd0 !important;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+        border-radius: 12px !important;
+    }
+
+    .boho-order-link {
+        color: #bc6c25 !important;
+        font-weight: bold;
+        transition: color 0.2s;
+    }
+    .boho-order-link:hover {
+        color: #dda15e !important;
+    }
+
+    .text-boho-success {
+        color: #606c38 !important;
+    }
+    .text-boho-danger {
+        color: #b84a39 !important;
+    }
+
+    /* back link */
+    .link-boho {
+        color: #bc6c25 !important;
+        font-weight: bold;
+    }
+    .link-boho:hover {
+        color: #dda15e !important;
+    }
+</style>
+
+<div class="row mt-5 mb-4">
+    <div class="col-12">
+        <h2 class="fw-bold" style="color: #606c38;">Your Orders</h2>
+        <hr style="border-color: #dda15e;">
+    </div>
+</div>
 
 {% if orders %}
+<div class="row justify-content-center justify-content-md-start">
 {% for order in orders %}
-<div class="col-md-7 mb-4 border rounded p-3">
-<!-- order id on right -->
-<b style="float: right;">Order Id: {{ order.id }}</b>
-<!-- order payment status -->
-{% if order.status %}
-    <h4><b class="text-success">Successful</b></h4>
-{% else %}
-    <h3><b class="text-danger">Cancelled</b></h3>
-{% endif %}
-<div class="text-muted border-top pt-2"></div>
-{% for item in order.items.all  %}
-    <div class="border-bottom p-2">
-        <p>product: <a class="text-decoration-none" href="{{ item.product.get_absolute_url }}">{{item.product.title}}</a></p>
-        <p>Price: {{item.price}} Toman</p>
-        <p>quantity: {{item.quantity}}</p>
+<div class="col-md-8 col-lg-7 mb-4 border p-4 boho-order-box">
+    
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            {% if order.status %}
+                <h4 class="mb-0"><b class="text-boho-success">Successful</b></h4>
+            {% else %}
+                <h4 class="mb-0"><b class="text-boho-danger">Cancelled</b></h4>
+            {% endif %}
+        </div>
+        <span class="text-muted fw-bold">Order Id: {{ order.id }}</span>
     </div>
-{% endfor %}
-<b>Total price: {{ order.get_total_price }} Toman</b>
+
+    <div class="border-top pt-2" style="border-color: #f4eae1 !important;"></div>
+    
+    <!-- list of products inside order-->
+    {% for item in order.items.all %}
+        <div class="border-bottom p-2 mb-2" style="border-color: #ebdcd0 !important;">
+            <p class="mb-1">Product: <a class="text-decoration-none boho-order-link" href="{{ item.product.get_absolute_url }}">{{item.product.title}}</a></p>
+            <p class="mb-1 text-secondary">Price: {{item.price}} Toman</p>
+            <p class="mb-0 text-secondary">Quantity: {{item.quantity}}</p>
+        </div>
+    {% endfor %}
+    
+    <!-- total price-->
+    <div class="mt-3 d-flex justify-content-between align-items-center">
+        <span class="fs-5 fw-bold" style="color: #bc6c25;">Total price: {{ order.get_total_price }} Toman</span>
+    </div>
 </div>
 {% endfor %}
+</div>
+
 {% else %}
-<div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8 mt-5 pt-5 text-center">
-      <br>
-      <h3 class="text-muted text-capitalize">Orders list is empty..!</h3>
-      <a href="/" class="text-primary text-decoration-none">Back</a>
+<!-- ِempty form of the order list-->
+<div class="row mt-5">
+    <div class="col-12 text-center pt-5">
+      <h3 class="text-capitalize mb-3" style="color: #606c38;">Orders list is empty..!</h3>
+      <a href="/" class="text-decoration-none link-boho">Back</a>
     </div>
-    <div class="col-md-2"></div>
 </div>
 {% endif %}
 
