@@ -8,7 +8,7 @@ from cart.forms import QuantityForm
 
 
 def paginat(request, list_objects):
-	p = Paginator(list_objects, 20)
+	p = Paginator(list_objects, 10)
 	page_number = request.GET.get('page')
 	try:
 		page_obj = p.get_page(page_number)

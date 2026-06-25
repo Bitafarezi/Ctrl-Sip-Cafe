@@ -19,7 +19,7 @@ def manager_login(request):
                 return redirect('dashboard:products')
             else:
                 messages.error(
-                    request, 'username or password is wrong', 'danger'
+                    request, 'username or password is wrong', extra_tags='danger'
                 )
                 return redirect('users:manager_login')
     else:
@@ -71,12 +71,14 @@ def user_logout(request):
 
 
 def edit_profile(request):
-    form = EditProfileForm(request.POST, instance=request.user)
-    if form.is_valid():
-        form.save()
-        messages.success(request, 'Your profile has been updated', 'success')
-        return redirect('users:edit_profile')
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated', extra_tags='success')
+            return redirect('users:edit_profile')
     else:
         form = EditProfileForm(instance=request.user)
-    context = {'title':'Edit Profile', 'form':form}
+        
+    context = {'title': 'Edit Profile', 'form': form}
     return render(request, 'edit_profile.html', context)
