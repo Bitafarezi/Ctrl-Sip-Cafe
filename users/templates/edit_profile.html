@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block content %}
@@ -14,28 +15,147 @@
         border-color: #dda15e !important;
         box-shadow: 0 0 0 0.25rem rgba(221, 161, 94, 0.4) !important;
     }
-
     .form-control:focus {
         border-color: #dda15e !important;
         box-shadow: 0 0 0 0.25rem rgba(221, 161, 94, 0.2) !important;
     }
-</style>
 
+    .avatar-wrapper {
+        position: relative;
+        width: 130px;
+        height: 130px;
+        margin: 0 auto 20px auto;
+    }
+    .avatar-container {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 4px solid #dda15e; 
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        cursor: pointer;
+        display: block;
+        background-color: #f4f1de; 
+    }
+    .avatar-preview {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .avatar-hint {
+        position: absolute;
+        bottom: 0;
+        right: 5px;
+        background-color: #606c38; 
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid white;
+        font-size: 0.85rem;
+        cursor: pointer;
+    }
+    
+    .avatar-delete-btn {
+        position: absolute;
+        bottom: 0;
+        left: 5px;
+        background-color: #e63946; 
+        color: white;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid white;
+        font-size: 0.85rem;
+        cursor: pointer;
+        padding: 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        transition: background-color 0.2s;
+    }
+    .avatar-delete-btn:hover {
+        background-color: #d62828;
+    }
+
+    .hidden-file-input {
+        display: none !important;
+    }
+</style>
 
 <div class="row justify-content-center mt-5">
     <div class="col-md-6 p-4 rounded" style="background-color: rgba(255, 255, 255, 0.85); border: 1px solid #ebdcd0;">
-        <form method="POST">
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <h3 class="fw-bold" style="color: #606c38;">Edit Profile</h3>
             <hr style="border-color: #dda15e;">
             
-            {{ form|crispy }}
+            <div class="avatar-wrapper">
+                <label for="id_avatar" class="avatar-container" title="Click to change avatar">
+                    {% if form.instance.avatar %}
+                        <img src="{{ form.instance.avatar.url }}" id="avatar-img" class="avatar-preview" alt="Avatar">
+                    {% else %}
+                        <img src="{% static 'images/default.jpeg' %}" id="avatar-img" class="avatar-preview" alt="Default Avatar">
+                    {% endif %}
+                </label>
+                
+                <label for="id_avatar" class="avatar-hint" title="Upload new photo">
+                    📷
+                </label>
+
+                {% if form.instance.avatar %}
+                    <button type="button" id="btn-delete-avatar" class="avatar-delete-btn" title="Delete current avatar">
+                        🗑️
+                    </button>
+                {% endif %}
+
+                <input type="checkbox" name="avatar-clear" id="avatar-clear_id" style="display: none;">
+                <input type="file" name="avatar" id="id_avatar" class="hidden-file-input" accept="image/*">
+            </div>
+
+            {{ form.full_name|as_crispy_field }}
+            {{ form.email|as_crispy_field }}
             
             <div class="form-group">
-
                 <button class="btn btn-boho-submit mt-4 w-100 py-2" type="submit">Update</button>
             </div>
         </form>
     </div>
 </div>
+
+<script>
+    const avatarInput = document.getElementById('id_avatar');
+    const avatarImg = document.getElementById('avatar-img');
+    const btnDelete = document.getElementById('btn-delete-avatar');
+    const clearCheckbox = document.getElementById('avatar-clear_id');
+    
+    const defaultAvatarUrl = "{% static 'images/default.png' %}";
+
+    avatarInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                avatarImg.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+            
+            if (clearCheckbox) clearCheckbox.checked = false;
+        }
+    });
+
+    // behavior of buttom to Remove the photo 
+    if (btnDelete) {
+        btnDelete.addEventListener('click', function() {
+            avatarImg.src = defaultAvatarUrl;
+            if (clearCheckbox) clearCheckbox.checked = true;
+            avatarInput.value = "";
+            this.style.display = 'none';
+        });
+    }
+</script>
 {% endblock %}
