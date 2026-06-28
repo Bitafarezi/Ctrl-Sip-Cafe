@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.template.defaultfilters import slugify
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Category(models.Model):
     title = models.CharField(max_length=200)
@@ -74,6 +75,10 @@ class Comment(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='comments')
     text = models.TextField()
+    rating = models.IntegerField(
+        default=5,
+        validators=[MinValueValidator(1), MaxValueValidator(5)]
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=False) 
 

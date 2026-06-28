@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from shop.models import Product, Category, Comment
 from cart.forms import QuantityForm
 from shop.forms import CommentForm
+from orders.models import OrderItem
 
 
 def paginat(request, list_objects):
@@ -48,6 +49,8 @@ def product_detail(request, slug):
 			return redirect('shop:product_detail', slug=product.slug)
 	else:
 		comment_form = CommentForm()
+  
+	buyer_ids = OrderItem.objects.filter(product=product, order__status=True).values_list('order__user_id', flat=True)
 
 	context = {
 		'title':product.title,
@@ -57,6 +60,7 @@ def product_detail(request, slug):
 		'related_products':related_products,
 		'comments': comments,          
         'comment_form': comment_form,
+        'buyer_ids': buyer_ids,
 	}
 
 	if request.user.is_authenticated:

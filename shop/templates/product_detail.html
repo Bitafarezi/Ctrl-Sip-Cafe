@@ -69,6 +69,19 @@
         border-color: #dda15e !important;
         box-shadow: 0 0 0 0.25rem rgba(221, 161, 94, 0.3) !important;
     }
+
+    .star-rating-input .star-node {
+        font-size: 28px;
+        color: #ccc;
+        cursor: pointer;
+        transition: color 0.15s ease-in-out;
+        display: inline-block;
+        margin-right: 2px;
+    }
+    .star-rating-input .star-node.active,
+    .star-rating-input .star-node.hovered {
+        color: #ffb703 !important;
+    }
 </style>
 
 <div class="row mb-3 mt-5"> <div class="col-md-1"></div>
@@ -117,18 +130,37 @@
     <div class="col-md-1"></div>
 </div>
 
+
 <div class="row mt-5 pt-4 border-top mb-5" style="direction: ltr; text-align: left;">
     <div class="col-md-1"></div>
-    
+
     <div class="col-md-5 pe-md-4">
         <h3 class="mb-4 fw-bold" style="color: #606c38; font-family: 'Cormorant Garamond', serif;">Reviews ({{ comments.count }})</h3>
         {% for comment in comments %}
             <div class="card comment-card mb-3 border-0 shadow-sm">
                 <div class="card-body p-3">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h6 class="card-title mb-0 fw-bold text-dark" style="font-size: 14px;">{{ comment.user.full_name }}</h6>
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <h6 class="card-title mb-0 fw-bold text-dark" style="font-size: 14px;">
+                            {{ comment.user.full_name }}
+                            
+                            {% if comment.user.id in buyer_ids %}
+                                <span class="badge ms-2 text-white" style="font-size: 10px; font-weight: 500; background-color: #2a9d8f;">
+                                    ✓ Verified Buyer
+                                </span>
+                            {% endif %}
+                        </h6>
                         <span class="text-muted" style="font-size: 11px;">{{ comment.created_at|timesince }} ago</span>
                     </div>
+                    
+                    <div class="mb-2 text-warning" style="font-size: 13px; letter-spacing: 1px;">
+                        {% if comment.rating == 1 %} ★☆☆☆☆
+                        {% elif comment.rating == 2 %} ★★☆☆☆
+                        {% elif comment.rating == 3 %} ★★★☆☆
+                        {% elif comment.rating == 4 %} ★★★★☆
+                        {% elif comment.rating == 5 %} ★★★★★
+                        {% endif %}
+                    </div>
+
                     <p class="card-text text-secondary mb-0" style="font-size: 13.5px; line-height: 1.5;">{{ comment.text }}</p>
                 </div>
             </div>
@@ -140,9 +172,26 @@
     <div class="col-md-5 ps-md-4 mt-4 mt-md-0">
         <h3 class="mb-4 fw-bold" style="color: #606c38; font-family: 'Cormorant Garamond', serif;">Leave a Review</h3>
         {% if request.user.is_authenticated %}
-            <form method="post" action="">
+            <form method="post" action="" id="reviewForm">
                 {% csrf_token %}
+                
+                <div style="display: none;">
+                    {{ comment_form.rating }}
+                </div>
+
                 <div class="mb-3">
+                    <label class="form-label text-muted mb-1" style="font-size: 13px;">Your Rating:</label>
+                    <div class="star-rating-input" id="starContainer">
+                        <span class="star-node active" data-score="1">★</span>
+                        <span class="star-node active" data-score="2">★</span>
+                        <span class="star-node active" data-score="3">★</span>
+                        <span class="star-node active" data-score="4">★</span>
+                        <span class="star-node active" data-score="5">★</span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-muted mb-1" style="font-size: 13px;">Your Comment:</label>
                     {{ comment_form.text }}
                 </div>
                 <button type="submit" class="btn btn-boho-submit px-4 py-2 shadow-sm">Submit Review</button>
@@ -174,4 +223,45 @@
     {% endfor %}
     </div>
 </div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll(".star-node");
+        const realRatingField = document.querySelector("#id_rating");
+
+        if (realRatingField) {
+            realRatingField.value = "5";
+            let currentSelected = 5;
+
+            function renderStars(score, className) {
+                stars.forEach(s => {
+                    const sScore = parseInt(s.getAttribute("data-score"));
+                    if (sScore <= score) {
+                        s.classList.add(className);
+                    } else {
+                        s.classList.remove(className);
+                    }
+                });
+            }
+
+            stars.forEach(star => {
+                star.addEventListener("mouseover", function () {
+                    const hoverScore = parseInt(this.getAttribute("data-score"));
+                    renderStars(hoverScore, "hovered");
+                });
+
+                star.addEventListener("mouseout", function () {
+                    stars.forEach(s => s.classList.remove("hovered"));
+                });
+
+                star.addEventListener("click", function () {
+                    currentSelected = parseInt(this.getAttribute("data-score"));
+                    realRatingField.value = currentSelected.toString();
+                    renderStars(currentSelected, "active");
+                });
+            });
+        }
+    });
+</script>
 {% endblock %}
