@@ -36,6 +36,9 @@ def user_register(request):
             user = User.objects.create_user(
                 data['email'], data['full_name'], data['password']
             )
+            
+            messages.success(request, 'Registration successful! A welcome email has been sent to your inbox. ☕')
+            
             return redirect('users:user_login')
     else:
         form = UserRegistrationForm()
