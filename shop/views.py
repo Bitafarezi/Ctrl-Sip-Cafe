@@ -3,8 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
-from shop.models import Product, Category
+from shop.models import Product, Category, Comment
 from cart.forms import QuantityForm
+from shop.forms import CommentForm
 
 
 def paginat(request, list_objects):
@@ -29,13 +30,35 @@ def product_detail(request, slug):
 	form = QuantityForm()
 	product = get_object_or_404(Product, slug=slug)
 	related_products = Product.objects.filter(category=product.category).all()[:5]
+	comments = product.comments.filter(is_active=True)
+
+	if request.method == 'POST':
+		if not request.user.is_authenticated:
+			messages.warning(request, "Please login to leave a review.")
+			return redirect('users:user_login')
+
+		comment_form = CommentForm(request.POST)
+		if comment_form.is_valid():
+			new_comment = comment_form.save(commit=False)
+			new_comment.product = product
+			new_comment.user = request.user
+			new_comment.save()
+
+			messages.success(request, "Your review has been submitted successfully and is awaiting moderation! ☕")
+			return redirect('shop:product_detail', slug=product.slug)
+	else:
+		comment_form = CommentForm()
+
 	context = {
 		'title':product.title,
 		'product':product,
 		'form':form,
 		'favorites':'favorites',
-		'related_products':related_products
+		'related_products':related_products,
+		'comments': comments,          
+        'comment_form': comment_form,
 	}
+
 	if request.user.is_authenticated:
 		if request.user.likes.filter(id=product.id).exists():
 			context['favorites'] = 'remove'
