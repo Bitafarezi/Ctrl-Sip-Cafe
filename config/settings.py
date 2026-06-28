@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'shop.apps.ShopConfig',
     'dashboard.apps.DashboardConfig',
     'orders.apps.OrdersConfig',
+    'admin_honeypot',
     'crispy_forms',
     'crispy_bootstrap4',
     'django.contrib.admin',
@@ -110,6 +111,8 @@ TIME_ZONE = 'Asia/Tehran'
 USE_I18N = True
 
 USE_TZ = True
+
+APPEND_SLASH = False
 
 
 # Static files (CSS, JavaScript, Images)

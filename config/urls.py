@@ -21,14 +21,20 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('shop.urls', namespace='shop')),
+    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path('maybe-secret/', admin.site.urls),
+    path('maybe-secret', admin.site.urls),
     path('users/', include('users.urls', namespace='users')),
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('dashboard/', include('dashboard.urls', namespace='dashboard')),
+    path('', include('shop.urls', namespace='shop')),
 ]
 
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
+admin.site.site_header = "Ctrl+Sip Café Administration"
+admin.site.site_title = "Ctrl+Sip Café Admin Portal"
+admin.site.index_title = "Welcome to Ctrl+Sip Café Management Panel"
