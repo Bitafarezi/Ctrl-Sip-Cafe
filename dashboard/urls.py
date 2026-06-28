@@ -13,4 +13,6 @@ urlpatterns = [
     path('add-product/', views.add_product, name='add_product'),
     path('add-category/', views.add_category, name='add_category'),
     path('mark-read/', views.mark_read, name='mark_read'),
+    path('comments/', views.comment_dashboard, name='comments'),
+    path('comments/<int:comment_id>/<str:action>/', views.manage_comment_action, name='manage_comment_action'),
 ]
