@@ -46,9 +46,9 @@ def send_welcome_email(sender, instance, created, **kwargs):
         )
         
         # Mailtrap web service address
-        url = "https://sandbox.api.mailtrap.io/api/send/#" # Your inbox id
+        url = "https://sandbox.api.mailtrap.io/api/send/4743416" # Your inbox id
         
-        api_token = "#" 
+        api_token = "f35243c7575d05697873eacf216efb59" 
         
         headers = {
             "Authorization": f"Bearer {api_token}",
