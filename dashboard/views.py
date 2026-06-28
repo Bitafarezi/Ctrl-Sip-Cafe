@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.http import Http404
 
-from shop.models import Product, ProductImage, Notification
+from shop.models import Product, ProductImage, Notification, Comment
 from users.models import User
 from orders.models import Order, OrderItem
 from .forms import AddProductForm, AddCategoryForm, EditProductForm, ProductImageFormSet
@@ -125,3 +125,31 @@ def mark_read(request):
 def dashboard(request):
     context = {'title': 'Dashboard'}
     return render(request, 'dashboard.html', context)
+
+
+@user_passes_test(is_manager)
+@login_required
+def comment_dashboard(request):
+    pending_comments = Comment.objects.filter(is_active=False).order_by('-created_at')
+    
+    context = {
+        'title': 'Review Comments',
+        'pending_comments': pending_comments
+    }
+    return render(request, 'comments.html', context)
+
+
+@user_passes_test(is_manager)
+@login_required
+def manage_comment_action(request, comment_id, action):
+    comment = get_object_or_404(Comment, id=comment_id)
+    
+    if action == 'approve':
+        comment.is_active = True
+        comment.save()
+        messages.success(request, f"Comment by {comment.user.full_name} approved successfully! ☕")
+    elif action == 'delete':
+        comment.delete()
+        messages.success(request, "Comment has been deleted permanently.", "success")
+        
+    return redirect('dashboard:comments')
