@@ -42,6 +42,30 @@
             border-color: #dda15e !important;
             box-shadow: 0 0 0 0.25rem rgba(221, 161, 94, 0.3) !important;
         }
+
+        /* 🟢 استایل‌های اختصاصی آواتار در هدر جهت جلوگیری از تداخل */
+        .avatar-wrapper-nav {
+            position: relative;
+            width: 40px !important;
+            height: 40px !important;
+            margin: 0;
+        }
+        .avatar-container-nav {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #dda15e; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            display: block;
+            background-color: #f4f1de; 
+        }
+        .avatar-preview-nav {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body>
@@ -58,12 +82,25 @@
             <b style="color: #e29578;">{{ request.user.get_likes_count }}</b>
             <a href="{% url 'shop:favorites' %}" style="color: #c26d5c;" class="mt-2 me-4"><i class="material-icons h3">&#xe87d;</i></a>
             
-            <div class="dropdown text-end" style="direction: ltr;">
+            <!-- کانتینر دراپ‌داون مجهز به d-flex برای قرارگیری خطی آواتار و دکمه -->
+            <div class="dropdown text-end d-flex align-items-center" style="direction: ltr;">
+
+              <div class="avatar-wrapper-nav me-2">
+                  <label class="avatar-container-nav">
+                      {% if request.user.avatar %}
+                          <img src="{{ request.user.avatar.url }}" class="avatar-preview-nav" alt="Avatar">
+                      {% else %}
+                          <img src="{% static 'images/default.jpeg' %}" class="avatar-preview-nav" alt="Default Avatar">
+                      {% endif %}
+                  </label>
+              </div>
+
               <a href="#" class="btn d-block text-decoration-none dropdown-toggle text-white btn-boho-main"
                 style="background-color: #bc6c25; border-color: #bc6c25; color: white !important;"
                 id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                 Profile
               </a>
+              
               <ul class="dropdown-menu dropdown-menu-end boho-dropdown shadow" aria-labelledby="dropdownUser1" style="background-color: #f4eae1; border-color: #dda15e; text-align: left;">
                   <li><a class="dropdown-item" href="{% url 'cart:show_cart' %}" style="color: #606c38;">Cart</a></li>
                   <li><a class="dropdown-item" href="{% url 'shop:favorites' %}" style="color: #606c38;">Favorites</a></li>
@@ -73,6 +110,7 @@
                   <li><a class="dropdown-item" href="{% url 'users:user_logout' %}" style="color: #b84a39;">Sign out</a></li>
               </ul>
             </div>
+
           {% else %}
             <div class="text-end">
               <a href="{% url 'users:user_login' %}" class="btn me-2 text-white" 
