@@ -93,7 +93,10 @@
     
     <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-4">
         <h4 class="mb-3 mb-sm-0"><span class="text-muted">Total:</span> <span class="fw-bold" style="color: #bc6c25;">{{ cart.get_total_price }} Toman</span></h4>
-        <a href="{% url 'orders:create_order' %}" class="btn btn-boho-checkout px-5 py-2 fw-bold">Checkout</a>
+        <form action="{% url 'orders:create_order' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
+        </form>
     </div>
 </div>
 {% else %}

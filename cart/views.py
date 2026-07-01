@@ -1,3 +1,4 @@
+from django.views.decorators.http import require_POST
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -8,6 +9,7 @@ from shop.models import Product
 
 
 @login_required
+@require_POST
 def add_to_cart(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
@@ -16,6 +18,9 @@ def add_to_cart(request, product_id):
         data = form.cleaned_data
         cart.add(product=product, quantity=data['quantity'])
         messages.success(request, 'Added to your cart!', 'info')
+    else:
+        messages.error(request, 'Invalid quantity. Please try again.')
+        
     return redirect('shop:product_detail', slug=product.slug)
 
 
@@ -27,6 +32,7 @@ def show_cart(request):
 
 
 @login_required
+@require_POST
 def remove_from_cart(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)

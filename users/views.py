@@ -1,12 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
 from .forms import UserRegistrationForm, UserLoginForm, ManagerLoginForm, EditProfileForm
 from users.models import User
 
 
 def manager_login(request):
+    if request.user.is_authenticated:
+        return redirect('dashboard:products')
+        
     if request.method == 'POST':
         form = ManagerLoginForm(request.POST)
         if form.is_valid():
@@ -19,9 +24,8 @@ def manager_login(request):
                 return redirect('dashboard:products')
             else:
                 messages.error(
-                    request, 'username or password is wrong', extra_tags='danger'
+                    request, 'Username or password is wrong', extra_tags='danger'
                 )
-                return redirect('users:manager_login')
     else:
         form = ManagerLoginForm()
     context = {'form': form}
@@ -29,6 +33,9 @@ def manager_login(request):
 
 
 def user_register(request):
+    if request.user.is_authenticated:
+        return redirect('shop:home_page')
+
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
@@ -36,17 +43,18 @@ def user_register(request):
             user = User.objects.create_user(
                 data['email'], data['full_name'], data['password']
             )
-            
             messages.success(request, 'Registration successful! A welcome email has been sent to your inbox. ☕')
-            
             return redirect('users:user_login')
     else:
         form = UserRegistrationForm()
-    context = {'title':'Signup', 'form':form}
+    context = {'title': 'Signup', 'form': form}
     return render(request, 'register.html', context)
 
 
 def user_login(request):
+    if request.user.is_authenticated:
+        return redirect('shop:home_page')
+
     if request.method == 'POST':
         form = UserLoginForm(request.POST)
         if form.is_valid():
@@ -59,20 +67,22 @@ def user_login(request):
                 return redirect('shop:home_page')
             else:
                 messages.error(
-                    request, 'username or password is wrong', 'danger'
+                    request, 'Username or password is wrong', 'danger'
                 )
-                return redirect('users:user_login')
     else:
         form = UserLoginForm()
-    context = {'title':'Login', 'form': form}
+    context = {'title': 'Login', 'form': form}
     return render(request, 'login.html', context)
 
 
+@login_required
+@require_POST  
 def user_logout(request):
     logout(request)
     return redirect('users:user_login')
 
 
+@login_required  
 def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, request.FILES, instance=request.user)
