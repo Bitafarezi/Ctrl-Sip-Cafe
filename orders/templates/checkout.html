@@ -8,7 +8,10 @@
     <hr>
     <p><b>Do you want to continue and pay?</b></p>
     <a href="{% url 'cart:show_cart' %}" class="btn btn-danger">Back To Cart</a>
-    <a href="{% url 'orders:create_order' %}" class="btn btn-outline-success">Continue and pay</a>
+    <form action="{% url 'orders:fake_payment' order.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Continue and pay</button>
+    </form>
 <div class="col-md-2"></div>
 
 {% endblock %}
