@@ -17,6 +17,9 @@ class Cart:
         for item in cart.values():
             item['total_price'] = int(float(item['price'])) * int(item['quantity'])
             yield item
+    
+    def __len__(self):
+        return sum(int(item['quantity']) for item in self.cart.values())
 
     def add_cart_session(self):
         cart = self.session.get(CART_SESSION_ID)
