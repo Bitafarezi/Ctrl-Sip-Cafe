@@ -43,7 +43,6 @@
             box-shadow: 0 0 0 0.25rem rgba(221, 161, 94, 0.3) !important;
         }
 
-        /* 🟢 استایل‌های اختصاصی آواتار در هدر جهت جلوگیری از تداخل */
         .avatar-wrapper-nav {
             position: relative;
             width: 40px !important;
@@ -82,7 +81,6 @@
             <b style="color: #e29578;">{{ request.user.get_likes_count }}</b>
             <a href="{% url 'shop:favorites' %}" style="color: #c26d5c;" class="mt-2 me-4"><i class="material-icons h3">&#xe87d;</i></a>
             
-            <!-- کانتینر دراپ‌داون مجهز به d-flex برای قرارگیری خطی آواتار و دکمه -->
             <div class="dropdown text-end d-flex align-items-center" style="direction: ltr;">
 
               <div class="avatar-wrapper-nav me-2">
@@ -107,7 +105,14 @@
                   <li><a class="dropdown-item" href="{% url 'orders:user_orders' %}" style="color: #606c38;">Orders</a></li>
                   <li><hr class="dropdown-divider" style="border-color: #dda15e;"></li>
                   <li><a class="dropdown-item" href="{% url 'users:edit_profile' %}" style="color: #606c38;">Edit Profile</a></li>
-                  <li><a class="dropdown-item" href="{% url 'users:user_logout' %}" style="color: #b84a39;">Sign out</a></li>
+                  <li>
+                    <form action="{% url 'users:user_logout' %}" method="post" id="logout-form" style="display: none;">
+                        {% csrf_token %}
+                    </form>
+                    <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="color: #b84a39;">
+                        Sign out
+                    </a>
+                  </li>
               </ul>
             </div>
 
