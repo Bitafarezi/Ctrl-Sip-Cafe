@@ -11,12 +11,12 @@
     <title>{% if title %} {{ title }} {% else %} Ctrl+Sip Café {% endif %}</title>
     <style>
         body {
-            background: linear-gradient(135deg, #fdf6e3 0%, #f4eae1 50%, #ebdcd0 100%);
+            background: linear-gradient(135deg, #fdf6e3 0%, #f4eae1 30%, #ebdcd0 60%, #fdf6e3 100%);
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* 3D Boho Animated Background */
+        /* Advanced 3D Boho Animated Background */
         .boho-bg-container {
             position: fixed;
             top: 0;
@@ -24,7 +24,7 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            perspective: 1500px;
+            perspective: 2000px;
             overflow: hidden;
         }
 
@@ -33,135 +33,249 @@
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
+            animation: globalRotateY 120s linear infinite;
         }
 
-        /* Rotating Boho Circles */
+        @keyframes globalRotateY {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        /* Advanced Rotating Boho Circles */
         .boho-circle {
             position: absolute;
             border-radius: 50%;
-            opacity: 0.15;
+            opacity: 0.12;
             transform-style: preserve-3d;
-            animation: rotate3D 25s linear infinite;
+            box-shadow: 
+                0 0 60px currentColor,
+                inset 0 0 40px rgba(255,255,255,0.1);
         }
 
         .boho-circle:nth-child(1) {
-            top: -8%;
-            left: -5%;
-            width: 450px;
-            height: 450px;
-            border: 50px solid #dda15e;
+            top: -12%;
+            left: -8%;
+            width: 520px;
+            height: 520px;
+            border: 55px solid #dda15e;
+            animation: circleFloat1 22s ease-in-out infinite;
         }
 
         .boho-circle:nth-child(2) {
-            top: 45%;
-            right: -10%;
-            width: 380px;
-            height: 380px;
-            border: 45px solid #bc6c25;
-            animation-delay: -8s;
+            top: 40%;
+            right: -15%;
+            width: 420px;
+            height: 420px;
+            border: 50px solid #bc6c25;
+            animation: circleFloat2 28s ease-in-out infinite;
         }
 
         .boho-circle:nth-child(3) {
-            bottom: -15%;
-            left: 28%;
-            width: 330px;
-            height: 330px;
-            border: 40px solid #606c38;
-            animation-delay: -15s;
+            bottom: -18%;
+            left: 25%;
+            width: 360px;
+            height: 360px;
+            border: 45px solid #606c38;
+            animation: circleFloat3 34s ease-in-out infinite;
         }
 
-        @keyframes rotate3D {
-            0% {
-                transform: rotateX(12deg) rotateY(0deg) rotateZ(0deg);
-            }
-            100% {
-                transform: rotateX(12deg) rotateY(360deg) rotateZ(0deg);
-            }
+        @keyframes circleFloat1 {
+            0%,100% { transform: translateZ(0px) rotateX(15deg) rotateY(0deg) rotateZ(0deg); }
+            25% { transform: translateZ(250px) rotateX(10deg) rotateY(45deg) rotateZ(15deg); }
+            50% { transform: translateZ(150px) rotateX(20deg) rotateY(90deg) rotateZ(-10deg); }
+            75% { transform: translateZ(220px) rotateX(5deg) rotateY(135deg) rotateZ(20deg); }
         }
 
-        /* Floating Glow Orbs */
+        @keyframes circleFloat2 {
+            0%,100% { transform: translateZ(0px) rotateX(-10deg) rotateY(0deg) rotateZ(0deg); }
+            33% { transform: translateZ(280px) rotateX(-18deg) rotateY(120deg) rotateZ(-15deg); }
+            66% { transform: translateZ(180px) rotateX(-5deg) rotateY(240deg) rotateZ(10deg); }
+        }
+
+        @keyframes circleFloat3 {
+            0%,100% { transform: translateZ(0px) rotateX(25deg) rotateY(0deg) rotateZ(0deg); }
+            50% { transform: translateZ(200px) rotateX(15deg) rotateY(180deg) rotateZ(25deg); }
+        }
+
+        /* Advanced Floating Glow Orbs */
         .glow-orb {
             position: absolute;
             border-radius: 50%;
-            opacity: 0.35;
+            opacity: 0.4;
             transform-style: preserve-3d;
-            animation: float3D 12s ease-in-out infinite;
+            filter: blur(2px);
         }
 
         .glow-orb:nth-child(4) {
-            top: 12%;
-            left: 12%;
-            width: 140px;
-            height: 140px;
-            background: radial-gradient(circle, #dda15e 0%, transparent 75%);
+            top: 10%;
+            left: 10%;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, #dda15e 0%, #e29578 30%, transparent 75%);
+            animation: orbFloat1 14s ease-in-out infinite;
         }
 
         .glow-orb:nth-child(5) {
-            top: 55%;
-            left: 6%;
-            width: 110px;
-            height: 110px;
-            background: radial-gradient(circle, #bc6c25 0%, transparent 75%);
-            animation-delay: 2s;
+            top: 52%;
+            left: 4%;
+            width: 130px;
+            height: 130px;
+            background: radial-gradient(circle, #bc6c25 0%, #dda15e 30%, transparent 75%);
+            animation: orbFloat2 18s ease-in-out infinite;
         }
 
         .glow-orb:nth-child(6) {
-            top: 30%;
-            right: 16%;
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle, #606c38 0%, transparent 75%);
-            animation-delay: 4s;
+            top: 28%;
+            right: 14%;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, #606c38 0%, #8b9e6f 30%, transparent 75%);
+            animation: orbFloat3 16s ease-in-out infinite;
         }
 
         .glow-orb:nth-child(7) {
-            bottom: 22%;
-            right: 12%;
-            width: 125px;
-            height: 125px;
-            background: radial-gradient(circle, #e29578 0%, transparent 75%);
-            animation-delay: 6s;
+            bottom: 20%;
+            right: 10%;
+            width: 145px;
+            height: 145px;
+            background: radial-gradient(circle, #e29578 0%, #dda15e 30%, transparent 75%);
+            animation: orbFloat4 20s ease-in-out infinite;
         }
 
-        @keyframes float3D {
-            0%, 100% {
-                transform: translateZ(0px) rotateX(0deg) rotateY(0deg);
-            }
-            25% {
-                transform: translateZ(180px) rotateX(12deg) rotateY(20deg);
-            }
-            50% {
-                transform: translateZ(220px) rotateX(0deg) rotateY(0deg);
-            }
-            75% {
-                transform: translateZ(180px) rotateX(-12deg) rotateY(-20deg);
-            }
+        @keyframes orbFloat1 {
+            0%,100% { transform: translateZ(0px) translateX(0px) translateY(0px) scale(1); }
+            25% { transform: translateZ(280px) translateX(80px) translateY(-60px) scale(1.1); }
+            50% { transform: translateZ(180px) translateX(20px) translateY(40px) scale(0.95); }
+            75% { transform: translateZ(260px) translateX(-40px) translateY(-20px) scale(1.05); }
         }
 
-        /* Boho Leaf Shapes */
+        @keyframes orbFloat2 {
+            0%,100% { transform: translateZ(0px) translateX(0px) translateY(0px) scale(1); }
+            30% { transform: translateZ(220px) translateX(-60px) translateY(50px) scale(0.9); }
+            60% { transform: translateZ(300px) translateX(40px) translateY(-30px) scale(1.15); }
+        }
+
+        @keyframes orbFloat3 {
+            0%,100% { transform: translateZ(0px) translateX(0px) translateY(0px) scale(1); }
+            35% { transform: translateZ(240px) translateX(50px) translateY(70px) scale(1.1); }
+            70% { transform: translateZ(160px) translateX(-70px) translateY(-40px) scale(0.92); }
+        }
+
+        @keyframes orbFloat4 {
+            0%,100% { transform: translateZ(0px) translateX(0px) translateY(0px) scale(1); }
+            40% { transform: translateZ(200px) translateX(-80px) translateY(-50px) scale(0.88); }
+            80% { transform: translateZ(270px) translateX(60px) translateY(30px) scale(1.12); }
+        }
+
+        /* Advanced Boho Leaf Shapes */
         .boho-leaf {
             position: absolute;
             width: 0;
             height: 0;
-            border-left: 35px solid transparent;
-            border-right: 35px solid transparent;
-            border-bottom: 70px solid #606c38;
-            opacity: 0.12;
+            opacity: 0.1;
             transform-style: preserve-3d;
-            animation: floatLeaf 14s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(96, 108, 56, 0.3));
         }
 
-        .boho-leaf:nth-child(8) { top: 25%; left: 42%; transform: rotate(35deg); animation-delay: 3s; }
-        .boho-leaf:nth-child(9) { top: 70%; right: 35%; transform: rotate(-40deg); animation-delay: 7s; }
-        .boho-leaf:nth-child(10) { top: 45%; left: 72%; transform: rotate(55deg); animation-delay: 11s; }
+        .boho-leaf:nth-child(8) {
+            top: 22%;
+            left: 40%;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 80px solid #606c38;
+            animation: leafFloat1 22s ease-in-out infinite;
+        }
 
-        @keyframes floatLeaf {
-            0%, 100% {
-                transform: translateZ(100px) rotate(35deg);
-            }
-            50% {
-                transform: translateZ(200px) rotate(-35deg);
-            }
+        .boho-leaf:nth-child(9) {
+            top: 68%;
+            right: 32%;
+            border-left: 38px solid transparent;
+            border-right: 38px solid transparent;
+            border-bottom: 76px solid #dda15e;
+            animation: leafFloat2 26s ease-in-out infinite;
+        }
+
+        .boho-leaf:nth-child(10) {
+            top: 42%;
+            left: 70%;
+            border-left: 36px solid transparent;
+            border-right: 36px solid transparent;
+            border-bottom: 72px solid #bc6c25;
+            animation: leafFloat3 24s ease-in-out infinite;
+        }
+
+        @keyframes leafFloat1 {
+            0%,100% { transform: translateZ(100px) rotate(35deg) translateX(0px) translateY(0px); }
+            25% { transform: translateZ(280px) rotate(-25deg) translateX(60px) translateY(-50px); }
+            50% { transform: translateZ(200px) rotate(45deg) translateX(-30px) translateY(40px); }
+            75% { transform: translateZ(260px) rotate(-15deg) translateX(20px) translateY(-20px); }
+        }
+
+        @keyframes leafFloat2 {
+            0%,100% { transform: translateZ(120px) rotate(-40deg) translateX(0px) translateY(0px); }
+            33% { transform: translateZ(300px) rotate(30deg) translateX(-70px) translateY(40px); }
+            66% { transform: translateZ(220px) rotate(-30deg) translateX(50px) translateY(-30px); }
+        }
+
+        @keyframes leafFloat3 {
+            0%,100% { transform: translateZ(80px) rotate(55deg) translateX(0px) translateY(0px); }
+            40% { transform: translateZ(250px) rotate(-35deg) translateX(40px) translateY(60px); }
+            80% { transform: translateZ(180px) rotate(45deg) translateX(-50px) translateY(-40px); }
+        }
+
+        /* Advanced 3D Star/Particle Elements */
+        .boho-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #dda15e;
+            opacity: 0.25;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        .boho-particle:nth-child(11) { top: 18%; left: 25%; width: 10px; height: 10px; background-color: #dda15e; animation: particleFloat1 25s linear infinite; }
+        .boho-particle:nth-child(12) { top: 35%; left: 60%; width: 6px; height: 6px; background-color: #bc6c25; animation: particleFloat2 22s linear infinite; }
+        .boho-particle:nth-child(13) { top: 58%; left: 18%; width: 9px; height: 9px; background-color: #606c38; animation: particleFloat3 28s linear infinite; }
+        .boho-particle:nth-child(14) { top: 8%; left: 80%; width: 7px; height: 7px; background-color: #e29578; animation: particleFloat4 20s linear infinite; }
+        .boho-particle:nth-child(15) { top: 78%; left: 45%; width: 11px; height: 11px; background-color: #dda15e; animation: particleFloat5 30s linear infinite; }
+        .boho-particle:nth-child(16) { top: 48%; right: 20%; width: 8px; height: 8px; background-color: #bc6c25; animation: particleFloat6 24s linear infinite; }
+
+        @keyframes particleFloat1 {
+            0% { transform: translateZ(0px) translateY(0px) translateX(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateZ(350px) translateY(-200px) translateX(-100px) rotate(360deg); opacity: 0; }
+        }
+        @keyframes particleFloat2 {
+            0% { transform: translateZ(0px) translateY(0px) translateX(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.25; }
+            90% { opacity: 0.25; }
+            100% { transform: translateZ(320px) translateY(180px) translateX(120px) rotate(-360deg); opacity: 0; }
+        }
+        @keyframes particleFloat3 {
+            0% { transform: translateZ(0px) translateY(0px) translateX(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.35; }
+            90% { opacity: 0.35; }
+            100% { transform: translateZ(380px) translateY(-160px) translateX(80px) rotate(720deg); opacity: 0; }
+        }
+        @keyframes particleFloat4 {
+            0% { transform: translateZ(0px) translateY(0px) translateX(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.28; }
+            90% { opacity: 0.28; }
+            100% { transform: translateZ(300px) translateY(220px) translateX(-90px) rotate(-720deg); opacity: 0; }
+        }
+        @keyframes particleFloat5 {
+            0% { transform: translateZ(0px) translateY(0px) translateX(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.32; }
+            90% { opacity: 0.32; }
+            100% { transform: translateZ(400px) translateY(-140px) translateX(150px) rotate(1080deg); opacity: 0; }
+        }
+        @keyframes particleFloat6 {
+            0% { transform: translateZ(0px) translateY(0px) translateX(0px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.26; }
+            90% { opacity: 0.26; }
+            100% { transform: translateZ(340px) translateY(160px) translateX(-130px) rotate(-1080deg); opacity: 0; }
         }
 
         header {
@@ -214,7 +328,7 @@
     </style>
 </head>
 <body>
-  <!-- 3D Boho Animated Background -->
+  <!-- Advanced 3D Boho Animated Background -->
   <div class="boho-bg-container">
     <div class="bg-objects">
       <!-- Rotating Circles -->
@@ -232,6 +346,14 @@
       <div class="boho-leaf"></div>
       <div class="boho-leaf"></div>
       <div class="boho-leaf"></div>
+
+      <!-- Advanced Particles -->
+      <div class="boho-particle"></div>
+      <div class="boho-particle"></div>
+      <div class="boho-particle"></div>
+      <div class="boho-particle"></div>
+      <div class="boho-particle"></div>
+      <div class="boho-particle"></div>
     </div>
   </div>
 
