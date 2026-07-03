@@ -11,11 +11,157 @@
     <title>{% if title %} {{ title }} {% else %} Ctrl+Sip Café {% endif %}</title>
     <style>
         body {
-            background-image: url("{% static 'images/your-bg.jpg' %}"); 
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-attachment: fixed; 
-            background-position: center;
+            background: linear-gradient(135deg, #fdf6e3 0%, #f4eae1 50%, #ebdcd0 100%);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* 3D Boho Animated Background */
+        .boho-bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            perspective: 1500px;
+            overflow: hidden;
+        }
+
+        .bg-objects {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        }
+
+        /* Rotating Boho Circles */
+        .boho-circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.15;
+            transform-style: preserve-3d;
+            animation: rotate3D 25s linear infinite;
+        }
+
+        .boho-circle:nth-child(1) {
+            top: -8%;
+            left: -5%;
+            width: 450px;
+            height: 450px;
+            border: 50px solid #dda15e;
+        }
+
+        .boho-circle:nth-child(2) {
+            top: 45%;
+            right: -10%;
+            width: 380px;
+            height: 380px;
+            border: 45px solid #bc6c25;
+            animation-delay: -8s;
+        }
+
+        .boho-circle:nth-child(3) {
+            bottom: -15%;
+            left: 28%;
+            width: 330px;
+            height: 330px;
+            border: 40px solid #606c38;
+            animation-delay: -15s;
+        }
+
+        @keyframes rotate3D {
+            0% {
+                transform: rotateX(12deg) rotateY(0deg) rotateZ(0deg);
+            }
+            100% {
+                transform: rotateX(12deg) rotateY(360deg) rotateZ(0deg);
+            }
+        }
+
+        /* Floating Glow Orbs */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.35;
+            transform-style: preserve-3d;
+            animation: float3D 12s ease-in-out infinite;
+        }
+
+        .glow-orb:nth-child(4) {
+            top: 12%;
+            left: 12%;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, #dda15e 0%, transparent 75%);
+        }
+
+        .glow-orb:nth-child(5) {
+            top: 55%;
+            left: 6%;
+            width: 110px;
+            height: 110px;
+            background: radial-gradient(circle, #bc6c25 0%, transparent 75%);
+            animation-delay: 2s;
+        }
+
+        .glow-orb:nth-child(6) {
+            top: 30%;
+            right: 16%;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #606c38 0%, transparent 75%);
+            animation-delay: 4s;
+        }
+
+        .glow-orb:nth-child(7) {
+            bottom: 22%;
+            right: 12%;
+            width: 125px;
+            height: 125px;
+            background: radial-gradient(circle, #e29578 0%, transparent 75%);
+            animation-delay: 6s;
+        }
+
+        @keyframes float3D {
+            0%, 100% {
+                transform: translateZ(0px) rotateX(0deg) rotateY(0deg);
+            }
+            25% {
+                transform: translateZ(180px) rotateX(12deg) rotateY(20deg);
+            }
+            50% {
+                transform: translateZ(220px) rotateX(0deg) rotateY(0deg);
+            }
+            75% {
+                transform: translateZ(180px) rotateX(-12deg) rotateY(-20deg);
+            }
+        }
+
+        /* Boho Leaf Shapes */
+        .boho-leaf {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 35px solid transparent;
+            border-right: 35px solid transparent;
+            border-bottom: 70px solid #606c38;
+            opacity: 0.12;
+            transform-style: preserve-3d;
+            animation: floatLeaf 14s ease-in-out infinite;
+        }
+
+        .boho-leaf:nth-child(8) { top: 25%; left: 42%; transform: rotate(35deg); animation-delay: 3s; }
+        .boho-leaf:nth-child(9) { top: 70%; right: 35%; transform: rotate(-40deg); animation-delay: 7s; }
+        .boho-leaf:nth-child(10) { top: 45%; left: 72%; transform: rotate(55deg); animation-delay: 11s; }
+
+        @keyframes floatLeaf {
+            0%, 100% {
+                transform: translateZ(100px) rotate(35deg);
+            }
+            50% {
+                transform: translateZ(200px) rotate(-35deg);
+            }
         }
 
         header {
@@ -68,6 +214,27 @@
     </style>
 </head>
 <body>
+  <!-- 3D Boho Animated Background -->
+  <div class="boho-bg-container">
+    <div class="bg-objects">
+      <!-- Rotating Circles -->
+      <div class="boho-circle"></div>
+      <div class="boho-circle"></div>
+      <div class="boho-circle"></div>
+
+      <!-- Floating Glow Orbs -->
+      <div class="glow-orb"></div>
+      <div class="glow-orb"></div>
+      <div class="glow-orb"></div>
+      <div class="glow-orb"></div>
+
+      <!-- Boho Leaves -->
+      <div class="boho-leaf"></div>
+      <div class="boho-leaf"></div>
+      <div class="boho-leaf"></div>
+    </div>
+  </div>
+
   <header class="p-2 border-bottom" style="background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(5px);">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-between">
