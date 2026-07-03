@@ -1,74 +1,51 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            
-            <div class="card shadow-sm border-0" style="background-color: #fdfbf7; border-radius: 12px; overflow: hidden;">
-                
-                <div style="border-top: 5px dashed #b84a39;"></div>
-                
-                <div class="card-body p-4">
-                    <div class="text-center mb-4">
-                        <h4 class="fw-bold mb-1" style="color: #3e2723; letter-spacing: 1px;">CTRL + SIP CAFE</h4>
-                        <small class="text-muted text-uppercase" style="font-size: 0.75rem; letter-spacing: 2px;">Order Receipt</small>
-                        <div class="text-muted mt-2" style="font-size: 0.85rem;">Order ID: #{{ order.id }}</div>
-                    </div>
+<div class="lux-page-header lux-reveal text-center" style="opacity:1;transform:none;">
+  <p class="lux-page-label">Checkout</p>
+  <h1 class="lux-page-title">Order Receipt</h1>
+</div>
 
-                    <hr style="border-top: 2px dashed #e0dcd3; opacity: 1;">
+<div class="lux-receipt lux-reveal">
+  <div class="lux-receipt-header">
+    <p class="lux-receipt-brand">Ctrl+Sip Café</p>
+    <p style="font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--cream-muted);margin-top:0.5rem;">Order Receipt</p>
+    <p style="font-size:0.8rem;color:var(--cream-muted);margin-top:0.75rem;">Order #{{ order.id }}</p>
+  </div>
 
-                    <div class="mb-4">
-                        <div class="d-flex justify-content-between fw-bold text-muted mb-2" style="font-size: 0.85rem;">
-                            <span>DESCRIPTION</span>
-                            <span>TOTAL</span>
-                        </div>
-                        
-                        {% if order.items.all %}
-                            {% for item in order.items.all %}
-                            <div class="d-flex justify-content-between align-items-center mb-2" style="color: #4e342e; font-size: 0.95rem;">
-                                <div>
-                                    <span class="fw-medium">{{ item.product.name }}</span>
-                                    <small class="text-muted d-block" style="font-size: 0.8rem;">{{ item.quantity }} × {{ item.price }} Toman</small>
-                                </div>
-                                <span class="fw-bold">{{ item.get_cost }}</span>
-                            </div>
-                            {% endfor %}
-                        {% else %}
-                            <div class="d-flex justify-content-between align-items-center mb-2" style="color: #4e342e;">
-                                <span>Items Total Price</span>
-                                <span class="fw-bold">{{ order.get_total_price }} Toman</span>
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    <hr style="border-top: 2px dashed #e0dcd3; opacity: 1;">
-
-                    <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded" style="background-color: #f5f1e9;">
-                        <span class="fw-bold" style="color: #3e2723; font-size: 0.9rem;">TOTAL AMOUNT:</span>
-                        <h4 class="fw-bold m-0" style="color: #b84a39;">{{ order.get_total_price }} Toman</h4>
-                    </div>
-
-                    <p class="text-center text-muted small mb-4"><b>Do you want to continue and pay?</b></p>
-
-                    <div class="d-flex justify-content-center align-items-center gap-2">
-                        <a href="{% url 'cart:show_cart' %}" class="btn btn-outline-danger px-4" style="border-radius: 8px;">
-                            Back To Cart
-                        </a>
-                        <form action="{% url 'orders:fake_payment' order.id %}" method="post" class="m-0 d-inline-block">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-success px-4" style="background-color: #2e7d32; border-color: #2e7d32; border-radius: 8px;">
-                                Continue and pay
-                            </button>
-                        </form>
-                    </div>
-
-                </div>
-                
-                <div style="border-bottom: 5px dashed #e0dcd3; margin-top: 15px;"></div>
-            </div>
-
-        </div>
+  <div class="lux-receipt-body">
+    <div class="d-flex justify-content-between mb-3" style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);">
+      <span>Description</span><span>Total</span>
     </div>
+
+    {% if order.items.all %}
+      {% for item in order.items.all %}
+      <div class="lux-receipt-row">
+        <div>
+          <span>{{ item.product.name }}</span>
+          <small class="d-block" style="color:var(--cream-muted);">{{ item.quantity }} × {{ item.price }} T</small>
+        </div>
+        <span>{{ item.get_cost }} T</span>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="lux-receipt-row"><span>Items Total</span><span>{{ order.get_total_price }} T</span></div>
+    {% endif %}
+
+    <div class="lux-receipt-total">
+      <span>Total Amount</span>
+      <span>{{ order.get_total_price }} T</span>
+    </div>
+
+    <p class="text-center mt-4 mb-0" style="color:var(--cream-muted);font-size:0.85rem;">Proceed with payment?</p>
+  </div>
+
+  <div class="lux-receipt-actions">
+    <a href="{% url 'cart:show_cart' %}" class="lux-btn lux-btn-outline">Back to Cart</a>
+    <form action="{% url 'orders:fake_payment' order.id %}" method="post" class="m-0">
+      {% csrf_token %}
+      <button type="submit" class="lux-btn lux-btn-solid">Pay Now</button>
+    </form>
+  </div>
 </div>
 {% endblock %}
