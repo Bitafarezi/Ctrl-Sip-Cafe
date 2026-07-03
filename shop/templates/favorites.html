@@ -1,79 +1,30 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<style>
-    .boho-card {
-        border-color: #ebdcd0 !important;
-        background-color: rgba(255, 255, 255, 0.9);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-        border-radius: 12px !important;
-    }
-    
-    .btn-boho-outline {
-        border-color: #606c38 !important;
-        color: #606c38 !important;
-        background-color: transparent;
-        transition: all 0.2s ease-in-out;
-    }
-    .btn-boho-outline:hover, .btn-boho-outline:focus {
-        background-color: #606c38 !important;
-        color: #fff !important;
-        box-shadow: 0 0 0 0.25rem rgba(96, 108, 56, 0.2) !important;
-    }
-
-    .btn-boho-remove {
-        border-color: #b84a39 !important;
-        color: #b84a39 !important;
-        background-color: transparent;
-        transition: all 0.2s ease-in-out;
-    }
-    .btn-boho-remove:hover, .btn-boho-remove:focus {
-        background-color: #b84a39 !important;
-        color: #fff !important;
-        box-shadow: 0 0 0 0.25rem rgba(184, 74, 57, 0.2) !important;
-    }
-
-    .link-boho {
-        color: #bc6c25 !important;
-        font-weight: bold;
-    }
-    .link-boho:hover {
-        color: #dda15e !important;
-    }
-</style>
-
-<div class="row mt-5 mb-3">
-    <div class="col-12">
-        <h2 class="fw-bold" style="color: #606c38;">Your Favorites</h2>
-        <hr style="border-color: #dda15e;">
-    </div>
+<div class="lux-page-header lux-reveal" style="opacity:1;transform:none;">
+  <p class="lux-page-label">Saved Items</p>
+  <h1 class="lux-page-title">Your Favorites</h1>
+  <div class="lux-page-divider"></div>
 </div>
 
 {% if products %}
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center justify-content-lg-start">
+<div class="lux-grid">
 {% for product in products %}
-  <div class="col d-flex justify-content-center">
-    <div class="card boho-card h-100" style="width: 18rem; overflow: hidden;">
-      <img style="object-fit: cover;" class="card-img-top mt-2 px-2" width="268" height="200" src="{{ product.image.url }}">
-      <div class="card-body d-flex flex-column text-center px-3">
-        <h5 class="card-title text-dark fw-bold">{{ product.title }}</h5>
-        <p class="mt-auto" style="color: #bc6c25; font-weight: bold;">{{ product.price }} T</p>
-        
-        <a href="{{ product.get_absolute_url }}" class="btn btn-boho-outline w-100 mb-2">Order Now</a>
-
-        <a href="{% url 'shop:remove_from_favorites' product.id %}" class="btn btn-boho-remove w-100">Remove</a>
-      </div>
+  <div class="lux-card" data-tilt>
+    <img src="{{ product.image.url }}" alt="{{ product.title }}" height="260">
+    <div class="lux-card-body">
+      <h3 class="lux-card-title">{{ product.title }}</h3>
+      <p class="lux-card-price">{{ product.price }} T</p>
+      <a href="{{ product.get_absolute_url }}" class="lux-btn lux-btn-outline w-100 mb-2">Order Now</a>
+      <a href="{% url 'shop:remove_from_favorites' product.id %}" class="lux-btn lux-btn-danger-outline w-100">Remove</a>
     </div>
   </div>
 {% endfor %}
 </div>
-
 {% else %}
-<div class="row mt-5">
-  <div class="col-12 text-center pt-5">
-    <h3 class="text-capitalize mb-3" style="color: #606c38;">favorites list is empty..!</h3>
-
-    <a href="/" class="text-decoration-none link-boho">Back</a>
-  </div>
+<div class="lux-empty">
+  <h3>Your favorites list is empty</h3>
+  <a href="{% url 'shop:home_page' %}" class="lux-btn lux-btn-primary">Explore Shop</a>
 </div>
 {% endif %}
 {% endblock %}

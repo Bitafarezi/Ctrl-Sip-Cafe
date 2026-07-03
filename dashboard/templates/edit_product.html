@@ -1,62 +1,33 @@
 {% extends "dashboard.html" %}
 {% block content %}
-
-<div class="container mt-4">
-    <div class="card shadow-sm p-4">
-        <h2 class="mb-4">{{ title }}</h2>
-        
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            
-            <div class="product-info-section mb-4">
-                <h4 class="text-secondary border-bottom pb-2">product Information</h4>
-                {{ form.as_p }}
-            </div>
-            
-            <div class="images-section mb-4">
-                <h4 class="text-secondary border-bottom pb-2">Product Images</h4>
-                
-                {{ formset.management_form }}
-                
-                <div class="row">
-                    {% for f in formset %}
-                        <div class="col-md-4 mb-3">
-                            <div class="card p-3 bg-light">
-                                
-                                {% if f.instance.pk and f.instance.image %}
-                                    <div class="text-center mb-2">
-                                        <img src="{{ f.instance.image.url }}" class="img-thumbnail" style="max-height: 120px; object-fit: cover;" alt="Product Image">
-                                    </div>
-                                {% endif %}
-                                
-                                {{ f.id }} <div class="form-group mb-2">
-                                    <label class="small form-label fw-bold">Image</label>
-                                    {{ f.image }}
-                                </div>
-                                
-                                <div class="form-group mb-2">
-                                    <label class="small form-label fw-bold">Order:</label>
-                                    {{ f.order }}
-                                </div>
-                                
-                                {{ f.id }} {% if formset.can_delete and f.instance.pk %}
-                                    <div class="form-check text-danger mt-2">
-                                        {{ f.DELETE }}
-                                        <label class="form-check-label small">Delet this image</label>
-                                    </div>
-                                {% endif %}
-                                
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <div class="form-group">
-                <button class="btn btn-primary mt-3 w-100" type="submit">Submit</button>
-            </div>
-        </form>
+<div class="lux-panel lux-form">
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p class="lux-page-label mb-3">Product Information</p>
+    {{ form.as_p }}
+    <hr style="border-color:rgba(201,169,98,0.15);margin:2rem 0;">
+    <p class="lux-page-label mb-3">Product Images</p>
+    {{ formset.management_form }}
+    <div class="row g-3">
+      {% for f in formset %}
+      <div class="col-md-4">
+        <div class="lux-panel" style="padding:1rem;">
+          {% if f.instance.pk and f.instance.image %}
+          <img src="{{ f.instance.image.url }}" class="w-100 mb-2" style="max-height:120px;object-fit:cover;border:1px solid var(--gold-dim);" alt="">
+          {% endif %}
+          {{ f.id }}
+          <label class="form-label">Image</label>
+          {{ f.image }}
+          <label class="form-label mt-2">Order</label>
+          {{ f.order }}
+          {% if formset.can_delete and f.instance.pk %}
+          <div class="mt-2">{{ f.DELETE }} <label>Delete</label></div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
     </div>
+    <button class="lux-btn lux-btn-primary w-100 mt-4" type="submit">Save Changes</button>
+  </form>
 </div>
-
 {% endblock %}

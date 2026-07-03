@@ -21,9 +21,16 @@ def paginat(request, list_objects):
 	return page_obj
 
 
+def landing_page(request):
+	featured = Product.objects.all()[:6]
+	categories = Category.objects.filter(is_sub=False)[:5]
+	context = {'featured': featured, 'categories': categories}
+	return render(request, 'landing.html', context)
+
+
 def home_page(request):
 	products = Product.objects.all()
-	context = {'products': paginat(request ,products)}
+	context = {'products': paginat(request ,products), 'title': 'Shop'}
 	return render(request, 'home_page.html', context)
 
 
