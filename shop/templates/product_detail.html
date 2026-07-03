@@ -1,267 +1,142 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<style>
-    .boho-detail-box {
-        border-color: #ebdcd0 !important;
-        background-color: rgba(255, 255, 255, 0.9);
-    }
-
-    .btn-boho-submit {
-        background-color: #bc6c25 !important;
-        border-color: #bc6c25 !important;
-        color: #fff !important;
-        transition: all 0.2s ease-in-out;
-    }
-    .btn-boho-submit:hover, .btn-boho-submit:focus {
-        background-color: #dda15e !important;
-        border-color: #dda15e !important;
-        box-shadow: 0 0 0 0.25rem rgba(221, 161, 94, 0.4) !important;
-    }
-
-    .btn-boho-fav-add {
-        border-color: #606c38 !important;
-        color: #606c38 !important;
-    }
-    .btn-boho-fav-add:hover {
-        background-color: #606c38 !important;
-        color: #fff !important;
-    }
-
-    .btn-boho-fav-remove {
-        border-color: #b84a39 !important;
-        color: #b84a39 !important;
-    }
-    .btn-boho-fav-remove:hover {
-        background-color: #b84a39 !important;
-        color: #fff !important;
-    }
-
-    .boho-card {
-        border-color: #ebdcd0 !important;
-        background-color: rgba(255, 255, 255, 0.9);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-        border-radius: 12px !important;
-    }
-    
-    .btn-boho-outline {
-        border-color: #606c38 !important;
-        color: #606c38 !important;
-        background-color: transparent;
-        transition: all 0.2s ease-in-out;
-    }
-    .btn-boho-outline:hover, .btn-boho-outline:focus {
-        background-color: #606c38 !important;
-        color: #fff !important;
-        box-shadow: 0 0 0 0.25rem rgba(96, 108, 56, 0.2) !important;
-    }
-    
-    .comment-card {
-        background-color: #fcf8f5;
-        border: 1px solid #ebdcd0;
-        border-radius: 10px;
-    }
-    .form-boho-text {
-        border-color: #ebdcd0 !important;
-        border-radius: 8px;
-    }
-    .form-boho-text:focus {
-        border-color: #dda15e !important;
-        box-shadow: 0 0 0 0.25rem rgba(221, 161, 94, 0.3) !important;
-    }
-
-    .star-rating-input .star-node {
-        font-size: 28px;
-        color: #ccc;
-        cursor: pointer;
-        transition: color 0.15s ease-in-out;
-        display: inline-block;
-        margin-right: 2px;
-    }
-    .star-rating-input .star-node.active,
-    .star-rating-input .star-node.hovered {
-        color: #ffb703 !important;
-    }
-</style>
-
-<div class="row mb-3 mt-5"> <div class="col-md-1"></div>
-    
-    <div class="col-md-5 p-4 border rounded boho-detail-box shadow-sm">
-        <div class="border-bottom mb-3 pb-2">
-            <span class="text-muted">categories:</span>
-            <a class="text-decoration-none fw-bold" style="color: #bc6c25;" href="{% url 'shop:filter_by_category' product.category.slug %}"> {{product.category}}</a>
-        </div>
-        <h2 class="fw-bold text-dark">{{ product.title }}</h2>
-        <h4 class="mt-4 text-dark font-monospace" style="color: #bc6c25 !important;">Price: {{ product.price }} T</h4>
-        <div class="mt-4 pe-3 mb-5 text-secondary" style="line-height: 1.7;">{{ product.description }}</div>
-        
-        <form method="post" action="{% url 'cart:add_to_cart' product.id %}">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" class="btn btn-boho-submit mt-4 px-4 py-2" value="Add to cart">
-        </form>
-        <br>
-        {% if favorites == 'remove' %}
-        <a href="{% url 'shop:remove_from_favorites' product.id %}" class="btn btn-boho-fav-remove mt-4 text-capitalize">{{favorites}} from favorites</a>
-        {% else %}
-        <a href="{% url 'shop:add_to_favorites' product.id %}" class="btn btn-boho-fav-add mt-4 text-capitalize">add to {{favorites}}</a>
-        {% endif %}
+<div class="lux-detail-grid lux-reveal" style="opacity:1;transform:none;">
+  <div>
+    <div class="lux-detail-image">
+      <img id="mainImage" src="{{ product.image.url }}" alt="{{ product.title }}" height="500">
     </div>
-
-    <div class="col-md-5"> <img id="mainImage" style="object-fit: cover; border-radius: 12px; border: 1px solid #ebdcd0;" class="w-100 shadow-sm" 
-            src="{{ product.image.url }}" height="500">
-
-        <div class="d-flex gap-2 mt-3 flex-wrap">
-            <img src="{{ product.image.url }}"
-                onclick="document.getElementById('mainImage').src=this.src"
-                style="object-fit: cover; cursor: pointer; border: 2px solid #bc6c25;"
-                class="rounded" width="80" height="80">
-
-            {% for img in product.images.all %}
-                <img src="{{ img.image.url }}"
-                    onclick="document.getElementById('mainImage').src=this.src"
-                    style="object-fit: cover; cursor: pointer; border: 2px solid transparent;"
-                    class="rounded" width="80" height="80"
-                    onmouseover="this.style.borderColor='#bc6c25'"
-                    onmouseout="this.style.borderColor='transparent'">
-            {% endfor %}
-        </div>
+    <div class="lux-thumbs">
+      <img src="{{ product.image.url }}" class="active" onclick="document.getElementById('mainImage').src=this.src; document.querySelectorAll('.lux-thumbs img').forEach(i=>i.classList.remove('active')); this.classList.add('active');" alt="Main">
+      {% for img in product.images.all %}
+      <img src="{{ img.image.url }}" onclick="document.getElementById('mainImage').src=this.src; document.querySelectorAll('.lux-thumbs img').forEach(i=>i.classList.remove('active')); this.classList.add('active');" alt="Gallery">
+      {% endfor %}
     </div>
-    <div class="col-md-1"></div>
+  </div>
+
+  <div class="lux-panel">
+    <div class="lux-detail-meta">
+      Category · <a href="{% url 'shop:filter_by_category' product.category.slug %}" class="lux-link">{{ product.category }}</a>
+    </div>
+    <h1 class="lux-detail-title">{{ product.title }}</h1>
+    <p class="lux-detail-price">{{ product.price }} T</p>
+    <div class="lux-detail-desc">{{ product.description }}</div>
+
+    <form method="post" action="{% url 'cart:add_to_cart' product.id %}" class="lux-form mb-3">
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit" class="lux-btn lux-btn-primary w-100 mt-3">Add to Cart</button>
+    </form>
+
+    {% if favorites == 'remove' %}
+    <a href="{% url 'shop:remove_from_favorites' product.id %}" class="lux-btn lux-btn-danger-outline w-100">{{ favorites|title }} from Favorites</a>
+    {% else %}
+    <a href="{% url 'shop:add_to_favorites' product.id %}" class="lux-btn lux-btn-outline w-100">Add to Favorites</a>
+    {% endif %}
+  </div>
 </div>
 
-
-<div class="row mt-5 pt-4 border-top mb-5" style="direction: ltr; text-align: left;">
-    <div class="col-md-1"></div>
-
-    <div class="col-md-5 pe-md-4">
-        <h3 class="mb-4 fw-bold" style="color: #606c38; font-family: 'Cormorant Garamond', serif;">Reviews ({{ comments.count }})</h3>
-        {% for comment in comments %}
-            <div class="card comment-card mb-3 border-0 shadow-sm">
-                <div class="card-body p-3">
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <h6 class="card-title mb-0 fw-bold text-dark" style="font-size: 14px;">
-                            {{ comment.user.full_name }}
-                            
-                            {% if comment.user.id in buyer_ids %}
-                                <span class="badge ms-2 text-white" style="font-size: 10px; font-weight: 500; background-color: #2a9d8f;">
-                                    ✓ Verified Buyer
-                                </span>
-                            {% endif %}
-                        </h6>
-                        <span class="text-muted" style="font-size: 11px;">{{ comment.created_at|timesince }} ago</span>
-                    </div>
-                    
-                    <div class="mb-2 text-warning" style="font-size: 13px; letter-spacing: 1px;">
-                        {% if comment.rating == 1 %} ★☆☆☆☆
-                        {% elif comment.rating == 2 %} ★★☆☆☆
-                        {% elif comment.rating == 3 %} ★★★☆☆
-                        {% elif comment.rating == 4 %} ★★★★☆
-                        {% elif comment.rating == 5 %} ★★★★★
-                        {% endif %}
-                    </div>
-
-                    <p class="card-text text-secondary mb-0" style="font-size: 13.5px; line-height: 1.5;">{{ comment.text }}</p>
-                </div>
-            </div>
-        {% empty %}
-            <p class="text-muted italic" style="font-size: 14px;">No reviews found for this coffee yet. Be the first to share your taste! ☕</p>
-        {% endfor %}
-    </div>
-
-    <div class="col-md-5 ps-md-4 mt-4 mt-md-0">
-        <h3 class="mb-4 fw-bold" style="color: #606c38; font-family: 'Cormorant Garamond', serif;">Leave a Review</h3>
-        {% if request.user.is_authenticated %}
-            <form method="post" action="" id="reviewForm">
-                {% csrf_token %}
-                
-                <div style="display: none;">
-                    {{ comment_form.rating }}
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label text-muted mb-1" style="font-size: 13px;">Your Rating:</label>
-                    <div class="star-rating-input" id="starContainer">
-                        <span class="star-node active" data-score="1">★</span>
-                        <span class="star-node active" data-score="2">★</span>
-                        <span class="star-node active" data-score="3">★</span>
-                        <span class="star-node active" data-score="4">★</span>
-                        <span class="star-node active" data-score="5">★</span>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label text-muted mb-1" style="font-size: 13px;">Your Comment:</label>
-                    {{ comment_form.text }}
-                </div>
-                <button type="submit" class="btn btn-boho-submit px-4 py-2 shadow-sm">Submit Review</button>
-            </form>
-        {% else %}
-            <div class="alert alert-warning border-0 p-3 shadow-sm" role="alert" style="font-size: 14px; background-color: #fdf6ed; color: #b06f21;">
-                Want to write a review? Please <a href="{% url 'users:user_login' %}" class="fw-bold text-decoration-none" style="color: #bc6c25;">Login</a> to your account first.
-            </div>
-        {% endif %}
-    </div>
-    
-    <div class="col-md-1"></div>
+<div class="lux-page-header lux-reveal mt-5 pt-5" style="border-top:1px solid rgba(201,169,98,0.1);">
+  <p class="lux-page-label">Reviews</p>
+  <h2 class="lux-page-title" style="font-size:2rem;">What They Say <em style="font-style:italic;color:var(--gold-light);">({{ comments.count }})</em></h2>
 </div>
 
-<div class="row mt-5 mb-4 pt-4 border-top">
-    <h3 class="mb-4 fw-bold" style="color: #606c38;">Related Products:</h3>
-    <div class="d-flex flex-wrap gap-4 justify-content-center justify-content-md-start">
-    {% for p in related_products %}
-        {% if p != product %}
-            <div class="card boho-card" style="width: 18rem; overflow: hidden;">
-                <img style="object-fit: cover;" class="card-img-top" width="100%" height="210" src="{{ p.image.url }}">
-                <div class="card-body d-flex flex-column text-center px-3">
-                <h5 class="card-title text-dark fw-bold">{{ p.title }}</h5>
-                <p class="mt-auto" style="color: #bc6c25; font-weight: bold;">{{ p.price }} Toman</p>
-                <a href="{{ p.get_absolute_url }}" class="btn btn-boho-outline w-100">Buy Now</a>
-                </div>
-            </div>
-        {% endif %}
+<div class="row g-4">
+  <div class="col-md-6">
+    {% for comment in comments %}
+    <div class="lux-comment lux-reveal">
+      <div class="lux-comment-header">
+        <span class="lux-comment-author">
+          {{ comment.user.full_name }}
+          {% if comment.user.id in buyer_ids %}
+          <span class="lux-badge lux-badge-verified">Verified Buyer</span>
+          {% endif %}
+        </span>
+        <span class="lux-comment-date">{{ comment.created_at|timesince }} ago</span>
+      </div>
+      <div class="lux-stars mb-2">
+        {% if comment.rating == 1 %}★☆☆☆☆{% elif comment.rating == 2 %}★★☆☆☆{% elif comment.rating == 3 %}★★★☆☆{% elif comment.rating == 4 %}★★★★☆{% else %}★★★★★{% endif %}
+      </div>
+      <p class="lux-comment-text">{{ comment.text }}</p>
+    </div>
+    {% empty %}
+    <p class="lux-comment-text">No reviews yet. Be the first to share your taste.</p>
     {% endfor %}
+  </div>
+
+  <div class="col-md-6">
+    <div class="lux-panel lux-form">
+      <p class="lux-page-label mb-3">Leave a Review</p>
+      {% if request.user.is_authenticated %}
+      <form method="post" id="reviewForm">
+        {% csrf_token %}
+        <div style="display:none;">{{ comment_form.rating }}</div>
+        <div class="mb-3">
+          <label class="form-label">Your Rating</label>
+          <div class="star-rating-input" id="starContainer">
+            <span class="star-node active" data-score="1">★</span>
+            <span class="star-node active" data-score="2">★</span>
+            <span class="star-node active" data-score="3">★</span>
+            <span class="star-node active" data-score="4">★</span>
+            <span class="star-node active" data-score="5">★</span>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Your Comment</label>
+          {{ comment_form.text }}
+        </div>
+        <button type="submit" class="lux-btn lux-btn-primary">Submit Review</button>
+      </form>
+      {% else %}
+      <div class="lux-alert lux-alert-warning">
+        Please <a href="{% url 'users:user_login' %}" class="lux-link">login</a> to leave a review.
+      </div>
+      {% endif %}
     </div>
+  </div>
 </div>
 
+{% if related_products %}
+<div class="lux-page-header lux-reveal mt-5">
+  <p class="lux-page-label">You May Also Like</p>
+  <h2 class="lux-page-title" style="font-size:2rem;">Related</h2>
+</div>
+<div class="lux-grid">
+  {% for p in related_products %}
+  {% if p != product %}
+  <a href="{{ p.get_absolute_url }}" class="lux-product-card">
+    <img src="{{ p.image.url }}" alt="{{ p.title }}">
+    <div class="lux-product-card-info">
+      <h3 class="lux-card-title">{{ p.title }}</h3>
+      <p class="lux-card-price">{{ p.price }} T</p>
+    </div>
+  </a>
+  {% endif %}
+  {% endfor %}
+</div>
+{% endif %}
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const stars = document.querySelectorAll(".star-node");
-        const realRatingField = document.querySelector("#id_rating");
-
-        if (realRatingField) {
-            realRatingField.value = "5";
-            let currentSelected = 5;
-
-            function renderStars(score, className) {
-                stars.forEach(s => {
-                    const sScore = parseInt(s.getAttribute("data-score"));
-                    if (sScore <= score) {
-                        s.classList.add(className);
-                    } else {
-                        s.classList.remove(className);
-                    }
-                });
-            }
-
-            stars.forEach(star => {
-                star.addEventListener("mouseover", function () {
-                    const hoverScore = parseInt(this.getAttribute("data-score"));
-                    renderStars(hoverScore, "hovered");
-                });
-
-                star.addEventListener("mouseout", function () {
-                    stars.forEach(s => s.classList.remove("hovered"));
-                });
-
-                star.addEventListener("click", function () {
-                    currentSelected = parseInt(this.getAttribute("data-score"));
-                    realRatingField.value = currentSelected.toString();
-                    renderStars(currentSelected, "active");
-                });
-            });
-        }
+document.addEventListener("DOMContentLoaded", function () {
+  const stars = document.querySelectorAll(".star-node");
+  const realRatingField = document.querySelector("#id_rating");
+  if (!realRatingField) return;
+  realRatingField.value = "5";
+  let currentSelected = 5;
+  function renderStars(score, cls) {
+    stars.forEach(s => {
+      parseInt(s.getAttribute("data-score")) <= score ? s.classList.add(cls) : s.classList.remove(cls);
     });
+  }
+  stars.forEach(star => {
+    star.addEventListener("mouseover", () => renderStars(parseInt(star.getAttribute("data-score")), "hovered"));
+    star.addEventListener("mouseout", () => stars.forEach(s => s.classList.remove("hovered")));
+    star.addEventListener("click", () => {
+      currentSelected = parseInt(star.getAttribute("data-score"));
+      realRatingField.value = currentSelected;
+      renderStars(currentSelected, "active");
+    });
+  });
+});
 </script>
 {% endblock %}

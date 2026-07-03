@@ -1,31 +1,21 @@
 {% extends "dashboard.html" %}
 {% block content %}
-
-<form method="POST" enctype="multipart/form-data">
+<div class="lux-panel lux-form">
+  <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    
-    {{ form }}
-    
-    <hr class="mt-4">
-    <h5 class="mb-3">Additional Images:</h5>
-    
+    {{ form.as_p }}
+    <hr style="border-color:rgba(201,169,98,0.15);margin:2rem 0;">
+    <p class="lux-page-label mb-3">Additional Images</p>
     {{ formset.management_form }}
     {% for image_form in formset %}
-        <div class="border rounded p-3 mb-2">
-            <div class="mb-2">
-                <label class="form-label">Image {{ forloop.counter }}</label>
-                {{ image_form.image }}
-            </div>
-            <div>
-                <label class="form-label">Order</label>
-                {{ image_form.order }}
-            </div>
-        </div>
-    {% endfor %}
-
-    <div class="form-group">
-        <button class="btn btn-primary mt-3 w-100" type="submit">Submit</button>
+    <div class="lux-panel mb-2" style="padding:1rem;">
+      <label class="form-label">Image {{ forloop.counter }}</label>
+      {{ image_form.image }}
+      <label class="form-label mt-2">Order</label>
+      {{ image_form.order }}
     </div>
-</form>
-
+    {% endfor %}
+    <button class="lux-btn lux-btn-primary w-100 mt-3" type="submit">Submit</button>
+  </form>
+</div>
 {% endblock %}

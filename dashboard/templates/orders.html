@@ -1,33 +1,31 @@
 {% extends "dashboard.html" %}
 {% block content %}
-<table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">User</th>
-        <th scope="col">Id</th>
-        <th scope="col">total price</th>
-        <th scope="col">status</th>
-        <th scope="col"></th>
-      </tr>
-    </thead>
-    {% for order in orders %}
-    <tbody>
-      <tr>
-        <th scope="row">{{ forloop.counter }}</th>
-        <td>{{ order.user.full_name }}</td>
-        <td>{{ order.id }}</td>
-        <td>${{ order.get_total_price }}</td>
-        {% if order.status %}
-            <td class="text-success">Successful</td>
-        {% else %}
-            <td class="text-danger">Canceled</td>
-        {% endif %}
-        <td><a href="{% url 'dashboard:order_detail' order.id %}" class="text-primary text-decoration-none">Detail</a></td>
-      </tr>
-    </tbody>
-    {% endfor %}
-  </table>
-  
-
+<div class="lux-panel">
+  <div class="lux-table-wrap">
+    <table class="lux-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>User</th>
+          <th>ID</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for order in orders %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ order.user.full_name }}</td>
+          <td>{{ order.id }}</td>
+          <td>{{ order.get_total_price }} T</td>
+          <td>{% if order.status %}<span class="lux-badge lux-badge-success">Paid</span>{% else %}<span class="lux-badge lux-badge-danger">Cancelled</span>{% endif %}</td>
+          <td><a href="{% url 'dashboard:order_detail' order.id %}" class="lux-link">Detail</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}

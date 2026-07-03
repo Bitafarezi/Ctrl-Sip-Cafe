@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
-from django.http import Http404
+from django.http import Http404, HttpResponseForbidden
 
 from shop.models import Product, ProductImage, Notification, Comment
 from users.models import User
@@ -13,10 +13,10 @@ from .forms import AddProductForm, AddCategoryForm, EditProductForm, ProductImag
 def is_manager(user):
     try:
         if not user.is_manager:
-            raise Http404
+            return 'Not Found'
         return True
     except:
-        raise Http404
+        raise HttpResponseForbidden
 
 
 @user_passes_test(is_manager)

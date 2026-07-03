@@ -2,483 +2,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&display=swap" rel="stylesheet">
-    <title>{% if title %} {{ title }} {% else %} Ctrl+Sip Café {% endif %}</title>
-    <style>
-        body {
-            background: linear-gradient(135deg, #fdf6e3 0%, #f4eae1 30%, #ebdcd0 60%, #fdf6e3 100%);
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{% if title %}{{ title }} · {% endif %}Ctrl+Sip Café</title>
 
-        /* Advanced 3D Boho Animated Background */
-        .boho-bg-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            perspective: 2000px;
-            overflow: hidden;
-        }
-
-        .bg-objects {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            animation: globalRotateY 120s linear infinite;
-        }
-
-        @keyframes globalRotateY {
-            from { transform: rotateY(0deg); }
-            to { transform: rotateY(360deg); }
-        }
-
-        /* Advanced Rotating Boho Circles */
-        .boho-circle {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.12;
-            transform-style: preserve-3d;
-            box-shadow: 
-                0 0 60px currentColor,
-                inset 0 0 40px rgba(255,255,255,0.1);
-        }
-
-        .boho-circle:nth-child(1) {
-            top: -12%;
-            left: -8%;
-            width: 520px;
-            height: 520px;
-            border: 55px solid #dda15e;
-            animation: circleFloat1 22s ease-in-out infinite;
-        }
-
-        .boho-circle:nth-child(2) {
-            top: 40%;
-            right: -15%;
-            width: 420px;
-            height: 420px;
-            border: 50px solid #bc6c25;
-            animation: circleFloat2 28s ease-in-out infinite;
-        }
-
-        .boho-circle:nth-child(3) {
-            bottom: -18%;
-            left: 25%;
-            width: 360px;
-            height: 360px;
-            border: 45px solid #606c38;
-            animation: circleFloat3 34s ease-in-out infinite;
-        }
-
-        @keyframes circleFloat1 {
-            0%,100% { transform: translateZ(0px) rotateX(15deg) rotateY(0deg) rotateZ(0deg); }
-            25% { transform: translateZ(250px) rotateX(10deg) rotateY(45deg) rotateZ(15deg); }
-            50% { transform: translateZ(150px) rotateX(20deg) rotateY(90deg) rotateZ(-10deg); }
-            75% { transform: translateZ(220px) rotateX(5deg) rotateY(135deg) rotateZ(20deg); }
-        }
-
-        @keyframes circleFloat2 {
-            0%,100% { transform: translateZ(0px) rotateX(-10deg) rotateY(0deg) rotateZ(0deg); }
-            33% { transform: translateZ(280px) rotateX(-18deg) rotateY(120deg) rotateZ(-15deg); }
-            66% { transform: translateZ(180px) rotateX(-5deg) rotateY(240deg) rotateZ(10deg); }
-        }
-
-        @keyframes circleFloat3 {
-            0%,100% { transform: translateZ(0px) rotateX(25deg) rotateY(0deg) rotateZ(0deg); }
-            50% { transform: translateZ(200px) rotateX(15deg) rotateY(180deg) rotateZ(25deg); }
-        }
-
-        /* Advanced Floating Glow Orbs */
-        .glow-orb {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.4;
-            transform-style: preserve-3d;
-            filter: blur(2px);
-        }
-
-        .glow-orb:nth-child(4) {
-            top: 10%;
-            left: 10%;
-            width: 160px;
-            height: 160px;
-            background: radial-gradient(circle, #dda15e 0%, #e29578 30%, transparent 75%);
-            animation: orbFloat1 14s ease-in-out infinite;
-        }
-
-        .glow-orb:nth-child(5) {
-            top: 52%;
-            left: 4%;
-            width: 130px;
-            height: 130px;
-            background: radial-gradient(circle, #bc6c25 0%, #dda15e 30%, transparent 75%);
-            animation: orbFloat2 18s ease-in-out infinite;
-        }
-
-        .glow-orb:nth-child(6) {
-            top: 28%;
-            right: 14%;
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle, #606c38 0%, #8b9e6f 30%, transparent 75%);
-            animation: orbFloat3 16s ease-in-out infinite;
-        }
-
-        .glow-orb:nth-child(7) {
-            bottom: 20%;
-            right: 10%;
-            width: 145px;
-            height: 145px;
-            background: radial-gradient(circle, #e29578 0%, #dda15e 30%, transparent 75%);
-            animation: orbFloat4 20s ease-in-out infinite;
-        }
-
-        @keyframes orbFloat1 {
-            0%,100% { transform: translateZ(0px) translateX(0px) translateY(0px) scale(1); }
-            25% { transform: translateZ(280px) translateX(80px) translateY(-60px) scale(1.1); }
-            50% { transform: translateZ(180px) translateX(20px) translateY(40px) scale(0.95); }
-            75% { transform: translateZ(260px) translateX(-40px) translateY(-20px) scale(1.05); }
-        }
-
-        @keyframes orbFloat2 {
-            0%,100% { transform: translateZ(0px) translateX(0px) translateY(0px) scale(1); }
-            30% { transform: translateZ(220px) translateX(-60px) translateY(50px) scale(0.9); }
-            60% { transform: translateZ(300px) translateX(40px) translateY(-30px) scale(1.15); }
-        }
-
-        @keyframes orbFloat3 {
-            0%,100% { transform: translateZ(0px) translateX(0px) translateY(0px) scale(1); }
-            35% { transform: translateZ(240px) translateX(50px) translateY(70px) scale(1.1); }
-            70% { transform: translateZ(160px) translateX(-70px) translateY(-40px) scale(0.92); }
-        }
-
-        @keyframes orbFloat4 {
-            0%,100% { transform: translateZ(0px) translateX(0px) translateY(0px) scale(1); }
-            40% { transform: translateZ(200px) translateX(-80px) translateY(-50px) scale(0.88); }
-            80% { transform: translateZ(270px) translateX(60px) translateY(30px) scale(1.12); }
-        }
-
-        /* Advanced Boho Leaf Shapes */
-        .boho-leaf {
-            position: absolute;
-            width: 0;
-            height: 0;
-            opacity: 0.1;
-            transform-style: preserve-3d;
-            filter: drop-shadow(0 0 15px rgba(96, 108, 56, 0.3));
-        }
-
-        .boho-leaf:nth-child(8) {
-            top: 22%;
-            left: 40%;
-            border-left: 40px solid transparent;
-            border-right: 40px solid transparent;
-            border-bottom: 80px solid #606c38;
-            animation: leafFloat1 22s ease-in-out infinite;
-        }
-
-        .boho-leaf:nth-child(9) {
-            top: 68%;
-            right: 32%;
-            border-left: 38px solid transparent;
-            border-right: 38px solid transparent;
-            border-bottom: 76px solid #dda15e;
-            animation: leafFloat2 26s ease-in-out infinite;
-        }
-
-        .boho-leaf:nth-child(10) {
-            top: 42%;
-            left: 70%;
-            border-left: 36px solid transparent;
-            border-right: 36px solid transparent;
-            border-bottom: 72px solid #bc6c25;
-            animation: leafFloat3 24s ease-in-out infinite;
-        }
-
-        @keyframes leafFloat1 {
-            0%,100% { transform: translateZ(100px) rotate(35deg) translateX(0px) translateY(0px); }
-            25% { transform: translateZ(280px) rotate(-25deg) translateX(60px) translateY(-50px); }
-            50% { transform: translateZ(200px) rotate(45deg) translateX(-30px) translateY(40px); }
-            75% { transform: translateZ(260px) rotate(-15deg) translateX(20px) translateY(-20px); }
-        }
-
-        @keyframes leafFloat2 {
-            0%,100% { transform: translateZ(120px) rotate(-40deg) translateX(0px) translateY(0px); }
-            33% { transform: translateZ(300px) rotate(30deg) translateX(-70px) translateY(40px); }
-            66% { transform: translateZ(220px) rotate(-30deg) translateX(50px) translateY(-30px); }
-        }
-
-        @keyframes leafFloat3 {
-            0%,100% { transform: translateZ(80px) rotate(55deg) translateX(0px) translateY(0px); }
-            40% { transform: translateZ(250px) rotate(-35deg) translateX(40px) translateY(60px); }
-            80% { transform: translateZ(180px) rotate(45deg) translateX(-50px) translateY(-40px); }
-        }
-
-        /* Advanced 3D Star/Particle Elements */
-        .boho-particle {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background-color: #dda15e;
-            opacity: 0.25;
-            box-shadow: 0 0 10px currentColor;
-        }
-
-        .boho-particle:nth-child(11) { top: 18%; left: 25%; width: 10px; height: 10px; background-color: #dda15e; animation: particleFloat1 25s linear infinite; }
-        .boho-particle:nth-child(12) { top: 35%; left: 60%; width: 6px; height: 6px; background-color: #bc6c25; animation: particleFloat2 22s linear infinite; }
-        .boho-particle:nth-child(13) { top: 58%; left: 18%; width: 9px; height: 9px; background-color: #606c38; animation: particleFloat3 28s linear infinite; }
-        .boho-particle:nth-child(14) { top: 8%; left: 80%; width: 7px; height: 7px; background-color: #e29578; animation: particleFloat4 20s linear infinite; }
-        .boho-particle:nth-child(15) { top: 78%; left: 45%; width: 11px; height: 11px; background-color: #dda15e; animation: particleFloat5 30s linear infinite; }
-        .boho-particle:nth-child(16) { top: 48%; right: 20%; width: 8px; height: 8px; background-color: #bc6c25; animation: particleFloat6 24s linear infinite; }
-
-        @keyframes particleFloat1 {
-            0% { transform: translateZ(0px) translateY(0px) translateX(0px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.3; }
-            90% { opacity: 0.3; }
-            100% { transform: translateZ(350px) translateY(-200px) translateX(-100px) rotate(360deg); opacity: 0; }
-        }
-        @keyframes particleFloat2 {
-            0% { transform: translateZ(0px) translateY(0px) translateX(0px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.25; }
-            90% { opacity: 0.25; }
-            100% { transform: translateZ(320px) translateY(180px) translateX(120px) rotate(-360deg); opacity: 0; }
-        }
-        @keyframes particleFloat3 {
-            0% { transform: translateZ(0px) translateY(0px) translateX(0px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.35; }
-            90% { opacity: 0.35; }
-            100% { transform: translateZ(380px) translateY(-160px) translateX(80px) rotate(720deg); opacity: 0; }
-        }
-        @keyframes particleFloat4 {
-            0% { transform: translateZ(0px) translateY(0px) translateX(0px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.28; }
-            90% { opacity: 0.28; }
-            100% { transform: translateZ(300px) translateY(220px) translateX(-90px) rotate(-720deg); opacity: 0; }
-        }
-        @keyframes particleFloat5 {
-            0% { transform: translateZ(0px) translateY(0px) translateX(0px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.32; }
-            90% { opacity: 0.32; }
-            100% { transform: translateZ(400px) translateY(-140px) translateX(150px) rotate(1080deg); opacity: 0; }
-        }
-        @keyframes particleFloat6 {
-            0% { transform: translateZ(0px) translateY(0px) translateX(0px) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.26; }
-            90% { opacity: 0.26; }
-            100% { transform: translateZ(340px) translateY(160px) translateX(-130px) rotate(-1080deg); opacity: 0; }
-        }
-
-        header {
-            z-index: 1030 !important; 
-            position: relative;
-        }
-
-        .boho-dropdown {
-            z-index: 1050 !important; 
-        }
-
-        .dropdown-item:hover {
-            background-color: #dda15e !important;
-            color: #fff !important;
-        }
-
-        .btn-boho-main:focus, .btn-boho-main:active, .btn-boho-main.show {
-            box-shadow: 0 0 0 0.25rem rgba(221, 161, 94, 0.5) !important;
-            background-color: #bc6c25 !important;
-            border-color: #bc6c25 !important;
-        }
-
-        .form-boho:focus {
-            border-color: #dda15e !important;
-            box-shadow: 0 0 0 0.25rem rgba(221, 161, 94, 0.3) !important;
-        }
-
-        .avatar-wrapper-nav {
-            position: relative;
-            width: 40px !important;
-            height: 40px !important;
-            margin: 0;
-        }
-        .avatar-container-nav {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid #dda15e; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            cursor: pointer;
-            display: block;
-            background-color: #f4f1de; 
-        }
-        .avatar-preview-nav {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-    </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/luxury.css' %}">
+  {% block extra_css %}{% endblock %}
 </head>
-<body>
-  <!-- Advanced 3D Boho Animated Background -->
-  <div class="boho-bg-container">
-    <div class="bg-objects">
-      <!-- Rotating Circles -->
-      <div class="boho-circle"></div>
-      <div class="boho-circle"></div>
-      <div class="boho-circle"></div>
+<body class="lux-body {% block body_class %}page-app{% endblock %}">
 
-      <!-- Floating Glow Orbs -->
-      <div class="glow-orb"></div>
-      <div class="glow-orb"></div>
-      <div class="glow-orb"></div>
-      <div class="glow-orb"></div>
+  <div class="lux-bg"></div>
+  {% block bg_canvas %}<canvas id="lux-bg-canvas" class="lux-bg-canvas"></canvas>{% endblock %}
 
-      <!-- Boho Leaves -->
-      <div class="boho-leaf"></div>
-      <div class="boho-leaf"></div>
-      <div class="boho-leaf"></div>
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
 
-      <!-- Advanced Particles -->
-      <div class="boho-particle"></div>
-      <div class="boho-particle"></div>
-      <div class="boho-particle"></div>
-      <div class="boho-particle"></div>
-      <div class="boho-particle"></div>
-      <div class="boho-particle"></div>
+  {% block nav %}
+  <nav class="site-nav">
+    <a href="{% url 'shop:landing' %}" class="site-nav-logo">
+      <strong>Ctrl+Sip</strong>
+      Café
+    </a>
+
+    <div class="site-nav-center">
+      <ul class="site-nav-links">
+        <li><a href="{% url 'shop:landing' %}">Home</a></li>
+        <li><a href="{% url 'shop:home_page' %}">Shop</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">Categories</a>
+          <ul class="dropdown-menu lux-dropdown-menu">
+            {% for category in categories %}
+              {% if not category.is_sub %}
+                <li><a class="dropdown-item" href="{% url 'shop:filter_by_category' category.slug %}"><strong>{{ category }}</strong></a></li>
+                {% for child in category.sub_categories.all %}
+                  <li><a class="dropdown-item" href="{% url 'shop:filter_by_category' child.slug %}">{{ child }}</a></li>
+                {% endfor %}
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </li>
+        <li><a href="{% url 'shop:favorites' %}">Favorites</a></li>
+      </ul>
+      <form action="{% url 'shop:search' %}" method="get">
+        <input name="q" type="search" class="lux-search" placeholder="Search..." aria-label="Search">
+      </form>
     </div>
-  </div>
 
-  <header class="p-2 border-bottom" style="background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(5px);">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-between">
-        
-        <div class="d-flex align-items-center mb-2 mb-lg-0">
-
-          {% if request.user.is_authenticated %}
-            <b style="color: #e29578;">{{ cart_count }}</b>
-            <a href="{% url 'cart:show_cart' %}" style="color: #c26d5c;" class="mt-2 me-3"><i class="material-icons h3">&#xe8cc;</i></a>
-            
-            <b style="color: #e29578;">{{ request.user.get_likes_count }}</b>
-            <a href="{% url 'shop:favorites' %}" style="color: #c26d5c;" class="mt-2 me-4"><i class="material-icons h3">&#xe87d;</i></a>
-            
-            <div class="dropdown text-end d-flex align-items-center" style="direction: ltr;">
-
-              <div class="avatar-wrapper-nav me-2">
-                  <label class="avatar-container-nav">
-                      {% if request.user.avatar %}
-                          <img src="{{ request.user.avatar.url }}" class="avatar-preview-nav" alt="Avatar">
-                      {% else %}
-                          <img src="{% static 'images/default.jpeg' %}" class="avatar-preview-nav" alt="Default Avatar">
-                      {% endif %}
-                  </label>
-              </div>
-
-              <a href="#" class="btn d-block text-decoration-none dropdown-toggle text-white btn-boho-main"
-                style="background-color: #bc6c25; border-color: #bc6c25; color: white !important;"
-                id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                Profile
-              </a>
-              
-              <ul class="dropdown-menu dropdown-menu-end boho-dropdown shadow" aria-labelledby="dropdownUser1" style="background-color: #f4eae1; border-color: #dda15e; text-align: left;">
-                  <li><a class="dropdown-item" href="{% url 'cart:show_cart' %}" style="color: #606c38;">Cart</a></li>
-                  <li><a class="dropdown-item" href="{% url 'shop:favorites' %}" style="color: #606c38;">Favorites</a></li>
-                  <li><a class="dropdown-item" href="{% url 'orders:user_orders' %}" style="color: #606c38;">Orders</a></li>
-                  <li><hr class="dropdown-divider" style="border-color: #dda15e;"></li>
-                  <li><a class="dropdown-item" href="{% url 'users:edit_profile' %}" style="color: #606c38;">Edit Profile</a></li>
-                  <li>
-                    <form action="{% url 'users:user_logout' %}" method="post" id="logout-form" style="display: none;">
-                        {% csrf_token %}
-                    </form>
-                    <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" style="color: #b84a39;">
-                        Sign out
-                    </a>
-                  </li>
-              </ul>
-            </div>
-
+    <div class="site-nav-actions">
+      {% if request.user.is_authenticated %}
+        <a href="{% url 'cart:show_cart' %}" class="nav-icon-link" title="Cart">
+          <span class="material-icons">shopping_cart</span>
+          <span>{{ cart_count }}</span>
+        </a>
+        <a href="{% url 'shop:favorites' %}" class="nav-icon-link" title="Favorites">
+          <span class="material-icons">favorite</span>
+          <span>{{ request.user.get_likes_count }}</span>
+        </a>
+        <div class="avatar-nav">
+          {% if request.user.avatar %}
+            <img src="{{ request.user.avatar.url }}" alt="Avatar">
           {% else %}
-            <div class="text-end">
-              <a href="{% url 'users:user_login' %}" class="btn me-2 text-white" 
-                style="background-color: #dda15e; border-color: #dda15e;">
-                Login
-              </a>
-              <a href="{% url 'users:user_register' %}" class="btn text-white" 
-                style="background-color: #dda15e; border-color: #dda15e;">
-                Sign-up
-              </a>
-            </div>
+            <img src="{% static 'images/default.jpeg' %}" alt="Avatar">
           {% endif %}
         </div>
-
-        <div class="d-flex align-items-center justify-content-center flex-grow-1 flex-lg-grow-0 mb-2 mb-lg-0">
-          <ul class="nav mb-2 justify-content-center mb-md-0 align-items-center me-3">
-            <li><a href="{% url 'shop:home_page' %}" class="nav-link px-2 text-dark">Home</a></li>
-            <li><a href="#" class="nav-link px-2 text-dark">Shop</a></li>
-            
-            <li class="dropdown">
-              <a href="#" class="nav-link px-2 text-dark dropdown-toggle" id="dropdownCategories" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
-              <ul class="dropdown-menu boho-dropdown shadow" aria-labelledby="dropdownCategories" style="background-color: #f4eae1; border-color: #dda15e;">
-                {% for category in categories %}
-                  {% if not category.is_sub %}
-                    <li><a href="{% url 'shop:filter_by_category' category.slug %}" class="dropdown-item text-capitalize border-bottom" style="color: #bc6c25; background-color: #ebdcd0;"><b>{{ category }}</b></a></li>
-                    {% for child in category.sub_categories.all %}
-                     <li><a href="{% url 'shop:filter_by_category' child.slug %}" class="dropdown-item" style="color: #606c38;">{{ child }}</a></li>
-                    {% endfor %}
-                  {% endif %}
-                {% endfor %}
-              </ul>
+        <div class="dropdown">
+          <button class="nav-profile-btn dropdown-toggle" data-bs-toggle="dropdown">Profile</button>
+          <ul class="dropdown-menu dropdown-menu-end lux-dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'cart:show_cart' %}">Cart</a></li>
+            <li><a class="dropdown-item" href="{% url 'shop:favorites' %}">Favorites</a></li>
+            <li><a class="dropdown-item" href="{% url 'orders:user_orders' %}">Orders</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{% url 'users:edit_profile' %}">Edit Profile</a></li>
+            <li>
+              <form action="{% url 'users:user_logout' %}" method="post" id="logout-form" style="display:none;">{% csrf_token %}</form>
+              <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sign Out</a>
             </li>
-            
-            <li><a href="#" class="nav-link px-2 text-dark">FAQs</a></li>
-            <li><a href="#" class="nav-link px-2 text-dark">About</a></li>
           </ul>
-          
-          <form class="mb-0" action="{% url 'shop:search' %}">
-            <input name="q" type="search" class="form-control form-control-dark form-boho" placeholder="Search..." aria-label="Search" style="border-color: #dda15e;">
-          </form>
         </div>
-
-        <div class="mb-2 mb-lg-0 ms-lg-3">
-          <a href="{% url 'shop:home_page' %}" class="text-decoration-none d-flex align-items-center text-end">
-            <div style="font-family: 'Cormorant Garamond', serif; color: #1a1a1a; line-height: 1.0; letter-spacing: 6px; text-transform: uppercase;">
-                <div style="font-size: 1.5rem; font-weight: 300;">CTRL+SIP</div>
-                <div style="font-size: 0.75rem; font-weight: 500; letter-spacing: 10px; color: #606c38; margin-top: 4px;">C A F É</div>
-            </div>
-          </a>
-        </div>
-
-      </div>
-    </div>
-  </header>
-  
-  <main class="container">
-    <div class="row justify-content-center mt-3">
-      {% if messages %}
-        <div class="col-md-6 col-lg-5 mb-2" style="direction: ltr; text-align: left;">
-          {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert" style="font-size: 14px; font-family: sans-serif;">
-              {{ message }}
-              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-          {% endfor %}
-        </div>
+      {% else %}
+        <a href="{% url 'users:user_login' %}" class="lux-btn lux-btn-outline" style="padding:0.45rem 1rem;">Login</a>
+        <a href="{% url 'users:user_register' %}" class="lux-btn lux-btn-primary" style="padding:0.45rem 1rem;">Join</a>
       {% endif %}
     </div>
+  </nav>
+  {% endblock %}
 
-    <div class="row">
+  {% block body %}
+  <main class="lux-main">
+    <div class="lux-container">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="lux-alert lux-alert-{{ message.tags }} lux-reveal" style="opacity:1;transform:none;">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
       {% block content %}{% endblock %}
     </div>
   </main>
-  
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+  {% block footer %}
+  <footer class="site-footer">
+    <div class="site-footer-logo">Ctrl+Sip Café</div>
+    <ul class="site-footer-links">
+      <li><a href="{% url 'shop:landing' %}">Home</a></li>
+      <li><a href="{% url 'shop:home_page' %}">Shop</a></li>
+      <li><a href="{% url 'users:user_login' %}">Login</a></li>
+    </ul>
+    <p class="site-footer-copy">&copy; 2026 Ctrl+Sip Café</p>
+  </footer>
+  {% endblock %}
+  {% endblock %}
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="{% static 'js/app.js' %}"></script>
+  {% block extra_js %}{% endblock %}
 </body>
 </html>
