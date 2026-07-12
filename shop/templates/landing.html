@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body_class %}page-landing{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/landing.css' %}">{% endblock %}
+{% block bg_canvas %}{% endblock %}
+
+{% block body %}
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader-logo">CTRL<span>+</span>SIP</div>
+    <div class="preloader-bar"><div class="preloader-bar-fill"></div></div>
+    <div class="preloader-percent">0%</div>
+  </div>
+
+  <div class="gold-line"></div>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-vignette"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Est. 2024 · Tehran</p>
+      <h1 class="hero-title">Perfection,<br><em>Brewed</em></h1>
+      <p class="hero-subtitle">Where code meets coffee</p>
+    </div>
+    <div class="hero-scroll">
+      <span>Discover</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Heritage -->
+  <section class="section heritage" id="heritage">
+    <div class="heritage-visual reveal-text">
+      <div class="heritage-frame"></div>
+      <div class="heritage-img-wrap">
+        <img src="https://images.unsplash.com/photo-1495474472283-4d77bcfd007a?w=1200&q=80" alt="Artisan coffee being poured" loading="lazy">
+      </div>
+    </div>
+    <div class="heritage-text">
+      <p class="section-label reveal-text">Our Heritage</p>
+      <h2 class="section-title reveal-text">Crafted with<br><em>Precision</em></h2>
+      <div class="section-divider"></div>
+      <p class="reveal-text">
+        At Ctrl+Sip, every cup is a masterpiece — roasted with obsessive attention,
+        brewed with engineering precision, and served with the warmth of a perfect compile.
+      </p>
+      <div class="heritage-stats reveal-text">
+        <div><div class="stat-num" data-count="47">0</div><div class="stat-label">Signature Drinks</div></div>
+        <div><div class="stat-num" data-count="12">0</div><div class="stat-label">Origin Regions</div></div>
+        <div><div class="stat-num" data-count="100">0</div><div class="stat-label">% Passion</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Collection -->
+  <section class="section collection" id="collection">
+    <div class="collection-header">
+      <div>
+        <p class="section-label reveal-text">The Collection</p>
+        <h2 class="section-title reveal-text">Curated<br><em>Selections</em></h2>
+        <div class="section-divider"></div>
+      </div>
+      <a href="{% url 'shop:home_page' %}" class="cta-btn reveal-text">View All</a>
+    </div>
+    <div class="collection-grid">
+      {% for product in featured %}
+      <a href="{{ product.get_absolute_url }}" class="product-card-3d">
+        <span class="product-card-num">{{ forloop.counter|stringformat:"02d" }}</span>
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.title }}" loading="lazy">
+        {% else %}
+        <img src="https://images.unsplash.com/photo-1511920170033-f8396924d3ab?w=600&q=80" alt="{{ product.title }}" loading="lazy">
+        {% endif %}
+        <div class="product-card-info">
+          <h3 class="product-card-name">{{ product.title }}</h3>
+          <p class="product-card-price">{{ product.price }} T</p>
+          <span class="product-card-link">Order Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+        </div>
+      </a>
+      {% empty %}
+      <a href="{% url 'shop:home_page' %}" class="product-card-3d">
+        <span class="product-card-num">01</span>
+        <img src="https://images.unsplash.com/photo-1511920170033-f8396924d3ab?w=600&q=80" alt="Mocha Latte" loading="lazy">
+        <div class="product-card-info"><h3 class="product-card-name">Mocha Latte</h3><p class="product-card-price">45 T</p><span class="product-card-link">Order Now</span></div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- Craft -->
+  <section class="craft" id="craft">
+    <div class="craft-bg" style="background-image:url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=1920&q=80');"></div>
+    <div class="craft-overlay"></div>
+    <div class="craft-content">
+      <p class="section-label reveal-text">The Craft</p>
+      <h2 class="section-title reveal-text">Every Sip<br><em>Compiles</em> Happiness</h2>
+      <div class="section-divider" style="margin:2rem auto;"></div>
+      <p class="reveal-text">From single-origin beans to latte art poured with surgical precision — we treat coffee like software.</p>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="categories" id="categories">
+    <div style="padding:0 clamp(1.5rem,5vw,4rem);">
+      <p class="section-label reveal-text">Explore</p>
+      <h2 class="section-title reveal-text">Our <em>World</em></h2>
+    </div>
+    <div class="marquee-wrap">
+      <div class="marquee-track">
+        {% for category in categories %}
+        <a href="{% url 'shop:filter_by_category' category.slug %}" class="category-pill">
+          <span class="category-pill-num">{{ forloop.counter|stringformat:"02d" }}</span>
+          <span class="category-pill-name">{{ category }}</span>
+        </a>
+        {% endfor %}
+        {% for category in categories %}
+        <a href="{% url 'shop:filter_by_category' category.slug %}" class="category-pill">
+          <span class="category-pill-num">{{ forloop.counter|stringformat:"02d" }}</span>
+          <span class="category-pill-name">{{ category }}</span>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="section experience" id="experience">
+    <p class="section-label reveal-text">The Experience</p>
+    <h2 class="section-title reveal-text">Beyond<br><em>Ordinary</em></h2>
+    <div class="section-divider"></div>
+    <div class="experience-cards">
+      <div class="exp-card" data-tilt><div class="exp-icon">☕</div><h3>Single Origin</h3><p>Beans from the world's finest estates, roasted in small batches.</p></div>
+      <div class="exp-card" data-tilt><div class="exp-icon">⚡</div><h3>Precision Brew</h3><p>Every extraction timed to the second. Water at exactly 93°C.</p></div>
+      <div class="exp-card" data-tilt><div class="exp-icon">✦</div><h3>Artisan Craft</h3><p>Hand-poured latte art and a menu that evolves with the seasons.</p></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta">
+    <canvas id="cta-canvas"></canvas>
+    <div class="cta-vignette"></div>
+    <div class="cta-content">
+      <p class="section-label reveal-text">Begin Your Journey</p>
+      <h2 class="section-title reveal-text">Taste the<br><em>Extraordinary</em></h2>
+      <div class="section-divider" style="margin:2rem auto;"></div>
+      <a href="{% url 'shop:home_page' %}" class="cta-btn reveal-text">Enter the Shop</a>
+    </div>
+  </section>
+
+{% endblock %}
+
+{% block footer %}
+<footer class="lux-footer">
+  <div class="lux-footer-logo">Ctrl+Sip Café</div>
+  <ul class="lux-footer-links">
+    <li><a href="{% url 'shop:home_page' %}">Shop</a></li>
+    <li><a href="{% url 'users:user_login' %}">Login</a></li>
+    <li><a href="{% url 'users:user_register' %}">Register</a></li>
+  </ul>
+  <p class="lux-footer-copy">&copy; 2026 Ctrl+Sip Café</p>
+</footer>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="{% static 'js/landing/main.js' %}"></script>
+{% endblock %}
