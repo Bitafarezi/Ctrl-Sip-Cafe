@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'orders.apps.OrdersConfig',
     'admin_honeypot',
+    'imagekit',
     'crispy_forms',
     'crispy_bootstrap4',
     'django.contrib.admin',
