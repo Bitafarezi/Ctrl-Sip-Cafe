@@ -43,12 +43,16 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=3, default=0.0)
     date_created = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField(unique=True)
+    
+    is_available = models.BooleanField(default=True, help_text="Availability of the product")
+    is_active = models.BooleanField(default=True, help_text="To show or not to show in the list")
+    attributes = models.JSONField(default=dict, blank=True, help_text="Product details in the format of JSON")
 
     class Meta:
         ordering = ('-date_created',)
 
     def __str__(self):
-        return self.slug
+        return self.title
         
     def get_absolute_url(self):
         return reverse('shop:product_detail', kwargs={'slug':self.slug})
@@ -97,6 +101,10 @@ class Comment(models.Model):
         default=5,
         validators=[MinValueValidator(1), MaxValueValidator(5)]
     )
+    
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='comment_likes')
+    dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='comment_dislikes')
+    
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=False) 
 
