@@ -138,10 +138,17 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 
-
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_URL = 'users:user_login'
+
+
+# Add pagination to API list
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10, # number of products in each page
+}
+
 
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
