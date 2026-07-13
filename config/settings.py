@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'admin_honeypot',
     'imagekit',
+    'rest_framework',
+    'corsheaders',
     'crispy_forms',
     'crispy_bootstrap4',
     'django.contrib.admin',
