@@ -11,5 +11,17 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
+        model = ProductImage
         fields = ['id', 'image', 'order']
+
+
+class ProductListSerializer(serializers.ModelSerializer):
+    category = CategorySerializer(read_only = True)
+    
+    class Meta:
+        model = Product
+        fields = ['id', 'category', 'title', 'description', 'price', 'image', 'is_available', 'attributes']
+        
+
+        
+    
