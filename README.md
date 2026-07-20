@@ -115,7 +115,7 @@ ctrl_sip_cafe/
 
 A big thank you to everyone who contributed to Ctrl+Sip Cafe ☕💻
 
-- Bita Farezi 
+- Bita Farezi
 - Amirhossein Kheirash  
 
 ---
